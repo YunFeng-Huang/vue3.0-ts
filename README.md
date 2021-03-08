@@ -28,7 +28,7 @@ vue add vue-next
 3. 如下例子为使用typescript + Vue3.0 开发的项目依赖，也可以直接使用
 ```json
 {
-  "name": "vue-next-ts-preview",
+  "name": "my_project",
   "version": "0.1.0",
   "private": true,
   "scripts": {

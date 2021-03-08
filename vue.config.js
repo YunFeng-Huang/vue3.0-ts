@@ -2,10 +2,10 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const WebpackBar = require('webpackbar')
 const resolve = dir => path.join(__dirname, dir)
 // page title
-const name =  'vue mobile template'
 // 生产环境，测试和正式
 const IS_PROD = ['production'].includes(process.env.NODE_ENV)
 let outputDir = 'dist'
@@ -80,27 +80,13 @@ module.exports = {
       },
     },
   },
-  configureWebpack: config => {
-    config.name = name
-    config.module.rules.push({
-      test: /\.vue$/,
-      loader: path.resolve(__dirname, 'src/plugins/inline-style-loader'),
-      include: [
-        resolve('src')
+configureWebpack() {
+    return {
+      plugins: [
+        new WebpackBar(),
       ],
-      options: {
-          rootValue: 75,
-          unitPrecision: 2,
-          minPixelValue: 2
-      }
-    })
-    // 为生产环境修改配置...
-    // if (IS_PROD) {
-    //   // externals
-    //   config.externals = externals
-    // }
+    }
   },
-
   chainWebpack: config => {
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
@@ -128,18 +114,6 @@ module.exports = {
     //   return args
     //  })
 
-    /**
-     * 设置保留空格
-     */
-    config.module
-      .rule('vue')
-      .use('vue-loader')
-      .loader('vue-loader')
-      .tap(options => {
-        options.compilerOptions.preserveWhitespace = true
-        return options
-      })
-      .end()
     /**
      * 打包分析
      */

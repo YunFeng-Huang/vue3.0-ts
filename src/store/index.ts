@@ -2,10 +2,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex)
+interface ModelesType {
+  [propName: string]: any;
+}
+// Vue.use(Vuex)
 const files = require.context('./modules', false, /\.js$/)
-const modules = {}
-
+const modules: ModelesType = {}
 files.keys().forEach(key => {
   if (key === "./index.ts") return;
   modules[key.replace(/(\.\/|\.ts)/g, "")] = files(key).default;
