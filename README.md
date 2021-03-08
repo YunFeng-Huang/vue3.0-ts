@@ -385,7 +385,7 @@ const syncComponent = defineComponent({
 
 
 // 二、定义异步组件
-// 方式1 
+// 方式1  
 const asyncComponent = defineAsyncComponent({
   loader: () => import("./asyncComponents.vue"),
   loadingComponent: loadingComponent,
