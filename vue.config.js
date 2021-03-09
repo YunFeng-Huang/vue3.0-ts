@@ -80,17 +80,23 @@ module.exports = {
       },
     },
   },
-configureWebpack() {
+  configureWebpack() {
     return {
-      plugins: [
-        new WebpackBar(),
-      ],
-    }
-  },
+        plugins: [
+          new WebpackBar(),
+        ],
+      }
+    },
+ 
   chainWebpack: config => {
+      // 前面的vue指的是使用时的名字，后面的Vue是加载的包名
+     config.set('externals', {
+      'vue': "Vue",
+      'ElementPlus': 'ElementPlus',
+     })
+    
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
-
     // 别名 alias
     config.resolve.alias
       .set('@', resolve('src'))
@@ -102,17 +108,8 @@ configureWebpack() {
     config.output
       .filename(path.join('static', `js/[name].${Date.now()}.js`))
       .chunkFilename(path.join('static', `js/[name].${Date.now()}.js`))
-    /**
-     * 添加CDN参数到htmlWebpackPlugin配置中
-     */
-    // config.plugin('html').tap(args => {
-    //   if (IS_PROD) {
-    //     args[0].cdn = cdn.build
-    //   } else {
-    //     args[0].cdn = cdn.dev
-    //   }
-    //   return args
-    //  })
+    
+   
 
     /**
      * 打包分析
