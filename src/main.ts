@@ -1,6 +1,6 @@
-// @ts-ignore: Unreachable code error
 import { createApp } from 'vue';
-import App from './App.vue'
+// @ts-ignore: Unreachable code error
+import App from './App';
 import router from './router'
 import store from './store';
 // @ts-ignore: Unreachable code error

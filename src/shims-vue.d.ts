@@ -5,6 +5,7 @@ declare module '*.vue' {
   export default component
 }
 declare module 'axios'
+// declare module '@/*'
 declare module 'element-plus'
 declare module "vue/types/vue" {
   import VueRouter, { Route } from 'vue-router';

@@ -10,13 +10,13 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "types": [
       "webpack-env"
     ],
     "paths": {
       "@/*": [
-        "src/*"
+        "/src/*"
       ]
     },
     "lib": [
@@ -38,6 +38,5 @@
   ],
   "exclude": [
     "node_modules",
-    // "src/main.ts",
   ]
 }

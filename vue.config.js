@@ -73,7 +73,7 @@ module.exports = {
           if (
             relativePath.replace(/\\/g, '/') !== 'src/styles/variables.scss'
           ) {
-            return '@import "~@/styles/variables.scss";' + content
+            return '@import "@/styles/variables.scss";' + content
           }
           return content
         },
