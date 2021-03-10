@@ -8,15 +8,16 @@
     "moduleResolution": "node",
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "types": [
       "webpack-env"
     ],
     "paths": {
       "@/*": [
-        "/src/*"
+        "src/*"
       ]
     },
     "lib": [
@@ -28,15 +29,17 @@
     "typeRoots": [
           "./@types"
       ],
+     
+  },
+  "ignoreRules": {
+    "TS2307": false
   },
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
   ],
   "exclude": [
     "node_modules",
-  ]
+  ],
 }

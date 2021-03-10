@@ -7,6 +7,15 @@ declare module '*.vue' {
 declare module 'axios'
 // declare module '@/*'
 declare module 'element-plus'
+// declare module '*.css';
+// declare module '*.scss';
+// declare module '*.sass';
+// declare module '*.svg';
+// declare module '*.png';
+// declare module '*.jpg';
+// declare module '*.jpeg';
+// declare module '*.gif';
+// declare module '*.ts';
 declare module "vue/types/vue" {
   import VueRouter, { Route } from 'vue-router';
   interface Vue {
@@ -16,4 +25,9 @@ declare module "vue/types/vue" {
     $Message: any;
     $Modal: any;
   }
+}
+declare module "*.vue" {
+  import { ComponentOptions } from "vue"
+  const componentOptions: ComponentOptions
+  export default componentOptions
 }

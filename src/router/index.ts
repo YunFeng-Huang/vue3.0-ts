@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 // import Layout from '../layout/index.vue';
 
-export const constantRoutes = [
+export const constantRoutes: Array<any> = [
   {
     path: '/login',
     component: () => import('@/views/login/index.vue'),
@@ -20,7 +20,7 @@ export const constantRoutes = [
     hidden: true,
   },
 ]
-export const asyncRoutes = [
+export const asyncRoutes: Array<any> = [
   {
     path: '/',
     // component: Layout,
@@ -34,7 +34,7 @@ export const asyncRoutes = [
       {
         path: 'index',
         name: 'Index',
-        // component: () => import('@/views/index.vue'),
+        component: () => import('@/views/layout/index.vue'),
         meta: {
           title: '首页',
           icon: 'home-4-line',

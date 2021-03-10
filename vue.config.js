@@ -82,6 +82,19 @@ module.exports = {
   },
   configureWebpack() {
     return {
+       resolve: { extensions: [".ts", ".tsx", ".js", ".json"] },  
+       module: {        
+        // rules: [    
+        //   {    
+        //     test: /\.tsx?$/,    
+        //     loader: 'ts-loader',    
+        //     exclude: /node_modules/,    
+        //     options: {
+        //       appendTsSuffixTo: [/\.vue$/],    
+        //     }    
+        //   }        
+        // ]    
+      } , 
         plugins: [
           new WebpackBar(),
         ],
@@ -109,8 +122,15 @@ module.exports = {
       .filename(path.join('static', `js/[name].${Date.now()}.js`))
       .chunkFilename(path.join('static', `js/[name].${Date.now()}.js`))
     
-   
-
+  //  config.module
+  //     .test(/\.tsx?$/)
+  //     .end()
+  //     .use('ts-loader')
+  //     .loader('ts-loader')
+  //    .options({
+  //        appendTsSuffixTo: [/\.vue$/],  
+  //     })
+  //     .end()
     /**
      * 打包分析
      */

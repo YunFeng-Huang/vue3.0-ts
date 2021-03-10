@@ -3,7 +3,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // Vue.use(Vuex)
-const files = require.context('./modules', false, /\.js$/)
+const files = require.context('./modules', false, /\.ts$/)
 const modules: any = {}
 files.keys().forEach(key => {
   if (key === "./index.ts") return;

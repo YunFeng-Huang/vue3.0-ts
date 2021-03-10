@@ -1,0 +1,203 @@
+/* 侧边栏 */
+.sidebar {
+    width: 200px;
+    height: calc(100% - 50px);
+    background: #212844 !important;
+    transition: all 0.3s;
+    position: fixed;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    overflow-x: hidden;
+
+    .iconfont {
+        margin-right: 8px;
+        color: #fff;
+        font-size: 18px;
+    }
+
+    .el-submenu__title {
+        background: #212844 !important;
+        height: 50px;
+        line-height: 50px;
+    }
+
+    .el-menu-item {
+        background: #12172E !important;
+    }
+
+    .title-name,
+    .el-icon-arrow-right {
+        color: #ccc;
+    }
+
+    /* 菜单hover时的背景 */
+    .el-submenu__title:hover,
+    .el-menu-item:hover {
+        background: rgba(42, 56, 116, 0.247) !important;
+    }
+
+    /* 菜单active时的背景 */
+    .el-menu-item.is-active {
+        background: rgba(85, 133, 255, 0.589) !important;
+
+        .title-name,
+        .el-icon-arrow-right {
+            color: #fff;
+        }
+    }
+
+
+
+    // .el-submenu.is-active .el-submenu__title {
+    //     // border-bottom-color: #385AB1;
+    //     background:rgba(114,155,255,1) !important;
+    //     .title-name{
+    //         color: #729BFF;
+    //     }
+    // }
+    .el-submenu.is-opened .el-submenu__title:before {
+        content: '';
+        width: 4px;
+        height: 100%;
+        background: rgba(42, 56, 116, 0.253);
+        position: absolute;
+        left: 0;
+    }
+
+    .no-active .el-submenu__icon-arrow {
+        display: none
+    }
+}
+
+
+/* 主体内容 */
+.main-container {
+    height: 100%;
+    margin-left: 200px;
+    transition: margin-left 0.3s;
+    position: relative;
+    box-sizing: border-box;
+    // padding-top: 50px;
+    overflow: auto;
+}
+
+
+/* 二级菜单内容 */
+.menu-two {
+    .sidebar {
+        left: 200px;
+        height: calc(100% - 12px);
+        margin: 6px;
+        position: fixed;
+        background: #fff !important;
+        width: 0px;
+        transition: all 0.3s;
+        opacity: 0;
+        z-index: 1000000;
+        box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.15);
+        color: rgba(41, 46, 54, 1);
+
+        .title-name {
+            color: rgba(41, 46, 54, 1);
+        }
+
+        .el-submenu__title:before {
+            content: '';
+            background: #fff !important;
+        }
+
+        .el-submenu.is-active.is-opened .el-submenu__title:before {
+            content: '';
+            width: 4px;
+            height: 60%;
+            background: #729BFF !important;
+            position: absolute;
+            left: 4px;
+            top: 20%;
+        }
+
+        .el-submenu__title {
+            background: #fff !important;
+        }
+
+        .el-menu-item {
+            height: 40px;
+            line-height: 40px;
+            background: #fff !important;
+        }
+
+        .el-menu-item.is-active {
+            background: rgba(235, 238, 252, 1) !important;
+
+            .title-name,
+            .el-icon-arrow-right {
+                color: #5586FF;
+            }
+        }
+
+        .el-menu-item:hover {
+            background: rgba(235, 238, 252, 1) !important;
+        }
+
+        .el-submenu.is-active.is-opened .el-submenu__title {
+            background: #fff !important;
+
+            .title-name {
+                color: #729BFF;
+            }
+        }
+    }
+
+}
+
+.sidebar {
+    z-index: 10000000
+}
+
+.q.menu-two .sidebar {
+    left: 64px !important;
+}
+
+.show.menu-two .sidebar {
+    width: 200px;
+    opacity: 1;
+}
+
+.el-menu {
+    border-right:none!important;
+}
+
+/* 折叠菜单下的样式 */
+.navCollapsed {
+    .sidebar {
+        width: 64px !important;
+
+        ul {
+            display: none;
+        }
+
+        .iconfont+span {
+            display: none;
+        }
+
+        .el-submenu__icon-arrow {
+            display: none;
+        }
+    }
+
+    .main-container {
+        margin-left: 64px;
+    }
+
+    .aside__top {
+        left: 64px !important;
+    }
+
+    .collapse-title {
+        span {
+            display: none;
+        }
+    }
+}
