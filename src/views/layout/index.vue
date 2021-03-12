@@ -10,7 +10,7 @@
     </div>
     <div
       class="menu-two"
-      @mouseleave="_mouseleave"
+      @mouseleave="mouseleave"
       :class="{ q: isSidebarNavCollapse, show: true }"
     >
       <sidebarNav
@@ -31,8 +31,8 @@ import { computed } from "vue";
 export default {
   setup() {
     const store = useStore();
-    const sidebarMenu = computed(() => store.state["permission"].sidebarMenu);
-    const currentMenu = computed(() => store.state["permission"].currentMenu);
+    // const sidebarMenu = computed(() => store.state["permission"].sidebarMenu);
+    // const currentMenu = computed(() => store.state["permission"].currentMenu);
     const isSidebarNavCollapse = computed(
       () => store.state["permission"].isSidebarNavCollapse
     );
@@ -43,14 +43,14 @@ export default {
     //     return v.meta;
     //   })
     // );
-    function _mouseleave() {
-      store.dispatch("permission/DED_THREEMENU");
+    function mouseleave() {
+      // store.dispatch("permission/DED_THREEMENU");
     }
     return {
-      sidebarMenu,
-      _mouseleave,
+      // sidebarMenu,
+      mouseleave,
       isSidebarNavCollapse,
-      currentMenu,
+      // currentMenu,
       twosidebarMenu,
       threeSidebarMenu,
       // show,

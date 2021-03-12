@@ -1,87 +1,96 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-// import Layout from '../layout/index.vue';
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 
-export const constantRoutes: Array<any> = [
+const login = () => import("@/views/login/index.vue");
+const _403 = () => import("@/views/403.vue");
+const _404 = () => import("@/views/404.vue");
+const empty = () => {};
+const layout = () => import("@/views/layout/index.vue");
+
+export const constantRoutes: Array<RouteRecordRaw> = [
   {
-    path: '/login',
-    component: () => import('@/views/login/index.vue'),
-    hidden: true,
-  },
-  {
-    path: '/403',
-    name: '403',
-    component: () => import('@/views/403.vue'),
-    hidden: true,
-  },
-  {
-    path: '/404',
-    name: '404',
-    component: () => import('@/views/404.vue'),
-    hidden: true,
-  },
-]
-export const asyncRoutes: Array<any> = [
-  {
-    path: '/',
-    // component: Layout,
-    redirect: '/index',
+    path: "/",
+    name: "/",
+    component: layout,
+    redirect: "/index",
     meta: {
-      title: '首页',
-      icon: 'home-4-line',
-      affix: true,
+      title: "首页",
     },
     children: [
       {
-        path: 'index',
-        name: 'Index',
-        component: () => import('@/views/layout/index.vue'),
+        path: "index",
+        name: "Index",
+        component: layout,
         meta: {
-          title: '首页',
-          icon: 'home-4-line',
-          affix: true,
+          title: "首页",
         },
       },
     ],
   },
   {
-    path: '/error',
-    name: 'Error',
-    // component: Layout,
-    redirect: '/error/403',
+    path: "/login",
+    name: "login",
+    component: login,
+  },
+  {
+    path: "/403",
+    name: "403",
+    component: _403,
+  },
+  {
+    path: "/404",
+    name: "404",
+    component: _404,
+  },
+
+  {
+    path: "/error",
+    name: "Error",
+    component: empty,
+    redirect: "/error/403",
     meta: {
-      title: '错误页',
-      icon: 'error-warning-line',
+      title: "错误页",
+      icon: "error-warning-line",
     },
     children: [
       {
-        path: '403',
-        name: 'Error403',
-        component: () => import('@/views/403.vue'),
+        path: "403",
+        name: "Error403",
+        component: _403,
         meta: {
-          title: '403',
-          icon: 'error-warning-line',
+          title: "403",
+          icon: "error-warning-line",
         },
       },
       {
-        path: '404',
-        name: 'Error404',
-        component: () => import('@/views/404.vue'),
+        path: "404",
+        name: "Error404",
+        component: _404,
         meta: {
-          title: '404',
-          icon: 'error-warning-line',
+          title: "404",
+          icon: "error-warning-line",
         },
       },
     ],
   },
   {
-    path: '/*',
-    redirect: '/404',
-    hidden: true,
+    path: "/*",
+    redirect: "/404",
+    component: empty,
   },
-]
+];
+
+const asyncFiles = require.context("./routersModules", true, /\.ts$/);
+let permissionModules: Array<RouteRecordRaw> = [];
+asyncFiles.keys().forEach((key) => {
+  if (key === "./index.ts") return;
+  permissionModules = permissionModules.concat(asyncFiles(key).default);
+});
+
+export const asyncRoutes: Array<RouteRecordRaw> = [...permissionModules];
+console.log(constantRoutes, "constantRoutes");
 const router = createRouter({
   history: createWebHashHistory(),
   routes: constantRoutes,
-})
+});
 
-export default router
+export default router;

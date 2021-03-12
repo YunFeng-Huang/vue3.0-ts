@@ -6,21 +6,15 @@
         <div class="login-container-form">
           <div class="login-container-hello">hello!</div>
           <div class="login-container-title">欢迎来到 {{ title }}</div>
-          <el-form :model="form" @submit="handleSubmit" @submit.prevent>
-            <el-form-item label="审批人">
-              <el-input v-model="form.username" placeholder="审批人"></el-input>
+          <el-form :model="form">
+            <el-form-item label="用户名">
+              <el-input v-model="form.username" placeholder="用户名"></el-input>
             </el-form-item>
-            <el-form-item label="审批人">
-              <el-input v-model="form.password" placeholder="审批人"></el-input>
+            <el-form-item label="密码">
+              <el-input v-model="form.password" placeholder="密码"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button
-                type="primary"
-                html-type="submit"
-                :disabled="form.username === '' || form.password === ''"
-              >
-                登录
-              </el-button>
+              <el-button @click="handleSubmit"> 登录 </el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -31,7 +25,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, reactive } from "vue";
-
+import store, { storeMutationTypes } from "@/store";
+import router from "@/router";
 export default defineComponent({
   name: "login",
   components: {},
@@ -41,7 +36,11 @@ export default defineComponent({
       username: "",
       password: "",
     });
-    function handleSubmit() {}
+    function handleSubmit() {
+      store.dispatch("user/" + storeMutationTypes.user.SETTOKEN, "token").then((res) => {
+        router.push("/");
+      });
+    }
     return { title, form, handleSubmit };
   },
 });

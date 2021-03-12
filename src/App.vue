@@ -1,9 +1,14 @@
 <template>
   <div id="app">
     <!--登入动画-->
-    <transition name="rotate-fall">
+    <!-- <transition name="rotate-fall">
       <router-view class="app-router-view"></router-view>
-    </transition>
+    </transition> -->
+    <router-view v-slot="{ Component }">
+      <transition name="rotate-fall">
+        <component :is="Component" class="app-router-view" />
+      </transition>
+    </router-view>
   </div>
 </template>
 

@@ -1,33 +1,51 @@
 // @ts-ignore: Unreachable code error
-import { createStore } from 'vuex'
-interface stateTypeString {
-  name: string
+import { asyncRoutes, constantRoutes, RouteRecordRaw } from "@/router";
+import { filterRoutes } from "@/utils/routers";
+import router from "@/router";
+import HomeRouter from "@/router/routersModules/home";
+interface permissionListType {
+  name?: string;
+  id?: number;
 }
-interface stateType {
-  permissionList: stateTypeString[],
-  accessToken: string
+export interface permissionState {
+  permissionList?: permissionListType[] | null;
+  token?: string | null;
+  routes?: RouteRecordRaw[];
+  isSidebarNavCollapse?: Boolean;
+  twosidebarMenu?: RouteRecordRaw[];
+  threeSidebarMenu?: RouteRecordRaw[];
 }
 
-const state: stateType = {
+const state: permissionState = {
   permissionList: [],
-  accessToken: ''
+  token: "",
+  routes: [],
+  isSidebarNavCollapse: false,
+  twosidebarMenu: HomeRouter,
+  threeSidebarMenu: [],
+};
+
+
+export enum MutationTypes {
+  SETROUTERS = 'SETROUTERS',
 }
-export default createStore({
-  state: state,
-  mutations: {
-    SET_PERMISSIONLIST(state, route) {
-      state.permissionList = route;
-    },
+
+const mutations = {
+  [MutationTypes.SETROUTERS](state: permissionState, routes: RouteRecordRaw[]) {
+    state.routes = routes;
   },
-  actions: {
-    FETCH_PERMISSION({ commit }, value) {
-      commit('SET_PERMISSIONLIST', value);
-    },
+};
+const actions = {
+  async [MutationTypes.SETROUTERS]({ commit }: any) {
+    const finallyRoutes = filterRoutes([...constantRoutes, ...asyncRoutes]);
+    commit("SETROUTERS", finallyRoutes);
+    return asyncRoutes;
   },
-  modules: {
-  },
-  getters: {
-    permissionList: (state) => state.permissionList,
-    accessToken: (state) => state.accessToken,
-  }
-})
+};
+
+const getters = {
+  permissionList: (state: permissionState) => state.permissionList,
+  hasToken: (state: permissionState) => state.token != null,
+};
+
+export default { state, getters, mutations, actions, namespaced: true };

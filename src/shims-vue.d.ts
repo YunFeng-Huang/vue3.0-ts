@@ -16,18 +16,9 @@ declare module 'element-plus'
 // declare module '*.jpeg';
 // declare module '*.gif';
 // declare module '*.ts';
-declare module "vue/types/vue" {
-  import VueRouter, { Route } from 'vue-router';
-  interface Vue {
-    $router: VueRouter; // 这表示this下有这个东西
-    $route: Route;
-    $http: any;
-    $Message: any;
-    $Modal: any;
-  }
-}
 declare module "*.vue" {
   import { ComponentOptions } from "vue"
   const componentOptions: ComponentOptions
-  export default componentOptions
+  export default componentOptions;
 }
+

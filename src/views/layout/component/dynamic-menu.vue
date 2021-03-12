@@ -1,9 +1,7 @@
 <template>
   <div class="menu-container">
-    <!-- v-if="v.meta && v.meta.requireAuth" -->
-    <template v-for="v in menuList">
-      <el-submenu
-        v-if="
+    <!-- v-if="v.meta && v.meta.requireAuth" 
+      v-if="
           v.children &&
           v.children.length > 0 &&
           v.children.some((v) => {
@@ -12,7 +10,9 @@
         "
         :index="v.name"
         :key="v.name"
-      >
+        -->
+    <template v-for="v in menuList">
+      <el-submenu>
         <template slot="title">
           <v-title :item="v"></v-title>
         </template>
@@ -20,29 +20,7 @@
           <my-nav :menuList="v.children"></my-nav>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item
-        :key="v.name"
-        :index="v.name"
-        @click.native="_gotoRoute('aliDecorationTwo')"
-        v-else-if="v.name === 'aliDecorationTwo' && enableV2Skin === '1'"
-      >
-        <v-title :item="v"></v-title>
-      </el-menu-item>
-      <el-menu-item
-        :key="v.name"
-        :index="v.name"
-        @click.native="_gotoRoute('aliDecorationThree')"
-        v-else-if="v.name === 'aliDecorationThree' && enableV2Skin === '0'"
-      >
-        <v-title :item="v"></v-title>
-      </el-menu-item>
-      <el-menu-item
-        :key="v.name"
-        :index="v.name"
-        @click.native="_gotoRoute(v)"
-        v-show="!(v.name === 'aliDecorationTwo' || v.name === 'aliDecorationThree')"
-        v-else
-      >
+      <el-menu-item :index="v.name" @click.native="gotoRoute">
         <v-title :item="v"></v-title>
       </el-menu-item>
     </template>
@@ -62,12 +40,7 @@ export default {
   },
 
   props: {
-    menuList: {
-      type: Array,
-      default: function () {
-        return [];
-      },
-    },
+    menuList: Array,
     twoMenu: {
       type: Boolean,
       default: false,
@@ -82,10 +55,10 @@ export default {
   setup() {
     const store = useStore();
     const currentMenu = computed(() => store.state["permission"].currentMenu);
-    function _gotoRoute() {}
+    function gotoRoute() {}
     return {
       currentMenu,
-      _gotoRoute,
+      gotoRoute,
     };
   },
   // methods: {
