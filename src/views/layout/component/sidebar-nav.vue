@@ -5,22 +5,21 @@
     text-color="#eee"
     active-text-color="#4dbcff"
   >
-    <DynamicMenu :twoMenu="twoMenu" :menuList="twosidebarMenu"></DynamicMenu>
+    <DynamicMenu :deep="1" :menuList="menuList"></DynamicMenu>
   </el-menu>
 </template>
 
 <script lang="ts">
 import DynamicMenu from "./dynamic-menu.vue";
-
-export default {
+import { defineComponent } from "vue";
+export default defineComponent({
   props: {
     isSidebarNavCollapse: Boolean,
-    twoMenu: Boolean,
-    twosidebarMenu: Array,
+    menuList: Array,
   },
   components: {
     DynamicMenu,
   },
-};
+});
 </script>
 <style lang="scss" scoped></style>

@@ -12,28 +12,28 @@ const state: userStateType = {
     avatar: '',
 }
 
-export enum MutationTypes {
+export enum MUTATIONTYPES {
     SETTOKEN = 'SETTOKEN',
     SETUSERNAME = 'SETUSERNAME',
     SETAVATAR = 'SETAVATAR',
 }
 
 const mutations = {
-    [MutationTypes.SETTOKEN](state: userStateType, token: string) {
+    [MUTATIONTYPES.SETTOKEN](state: userStateType, token: string) {
         state.token = token
     },
-    [MutationTypes.SETUSERNAME](state: userStateType, username: string) {
+    [MUTATIONTYPES.SETUSERNAME](state: userStateType, username: string) {
         state.username = username
     },
-    [MutationTypes.SETAVATAR](state: userStateType, avatar: string) {
+    [MUTATIONTYPES.SETAVATAR](state: userStateType, avatar: string) {
         state.avatar = avatar
     },
 }
 
 const actions = {
-    [MutationTypes.SETTOKEN]({ commit }, token: string) {
+    [MUTATIONTYPES.SETTOKEN]({ commit }, token: string) {
         console.log(token, 'value');
-        commit(MutationTypes.SETTOKEN, token)
+        commit(MUTATIONTYPES.SETTOKEN, token)
     },
 };
 

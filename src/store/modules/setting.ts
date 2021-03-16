@@ -11,12 +11,12 @@ const state: settingStateType = {
 }
 
 
-export enum MutationTypes {
+export enum MUTATIONTYPES {
     TOGGLECOLLAPSE = 'TOGGLECOLLAPSE',
 }
 
 const mutations = {
-    [MutationTypes.TOGGLECOLLAPSE](state: settingStateType, collapse: boolean) {
+    [MUTATIONTYPES.TOGGLECOLLAPSE](state: settingStateType, collapse: boolean) {
         state.collapse = collapse
     },
 }

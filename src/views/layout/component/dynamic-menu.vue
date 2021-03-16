@@ -1,86 +1,54 @@
 <template>
-  <div class="menu-container">
-    <!-- v-if="v.meta && v.meta.requireAuth" 
-      v-if="
-          v.children &&
-          v.children.length > 0 &&
-          v.children.some((v) => {
-            return v.meta && v.meta.requireAuth;
-          })
-        "
-        :index="v.name"
-        :key="v.name"
-        -->
-    <template v-for="v in menuList">
-      <el-submenu>
-        <template slot="title">
-          <v-title :item="v"></v-title>
-        </template>
-        <el-menu-item-group>
-          <my-nav :menuList="v.children"></my-nav>
-        </el-menu-item-group>
-      </el-submenu>
-      <el-menu-item :index="v.name" @click.native="gotoRoute">
-        <v-title :item="v"></v-title>
-      </el-menu-item>
-    </template>
-  </div>
+  <el-submenu
+    v-for="(item, index) in menuList"
+    :index="deep + Math.random().toString()"
+    :class="item.children == null || item.children.length == 0 ? 'no-children' : ''"
+  >
+    <template #title><v-title :item="item"></v-title></template>
+    <el-menu-item-group>
+      <my-nav :menuList="item.children" :deep="deep + 1"></my-nav>
+    </el-menu-item-group>
+  </el-submenu>
 </template>
 
 <script lang="ts">
 import vTitle from "./dynamic-menu-title.vue";
-import { useStore } from "vuex";
-import { computed } from "vue";
-export default {
+import { RouteRecordRaw } from "vue-router";
+import { computed, defineComponent } from "vue";
+export default defineComponent({
   name: "my-nav",
-  data() {
-    return {
-      enableV2Skin: "0",
-    };
-  },
-
   props: {
     menuList: Array,
-    twoMenu: {
-      type: Boolean,
-      default: false,
-    },
+    deep: Number,
   },
   components: {
     vTitle,
   },
-  // computed: {
-  //   ...mapState("permission", ["currentMenu"]),
-  // },
-  setup() {
-    const store = useStore();
-    const currentMenu = computed(() => store.state["permission"].currentMenu);
-    function gotoRoute() {}
+
+  setup(props) {
+    const menuList = props.menuList as RouteRecordRaw[];
     return {
-      currentMenu,
-      gotoRoute,
+      menuList,
     };
   },
-  // methods: {
-  //   // _gotoRoute(v) {
-  //   //   if ((!this.twoMenu && v.havechildren === undefined) || this.twoMenu) {
-  //   //     this.$router.push({
-  //   //       name: v.name || v,
-  //   //     });
-  //   //     this.$store.dispatch("permission/DED_THREEMENU");
-  //   //   } else {
-  //   //     this.$store.dispatch("permission/SET_THREEMENU", v.name);
-  //   //   }
-  //   // },
-  // },
-  // created() {
-  //   this.enableV2Skin = sessionStorage.enableV2Skin;
-  // },
-};
+});
 </script>
 
-<style lang="scss" scoped>
-.title-img {
-  margin-right: 4px;
+<style scoped>
+.el-header {
+  background-color: #b3c0d1;
+  color: #333;
+  line-height: 60px;
+}
+
+.el-aside {
+  color: #333;
+}
+.el-menu-item,
+.el-submenu {
+  color: #b3c0d1;
+}
+/deep/ .el-submenu__title {
+  color: #b3c0d1;
 }
 </style>

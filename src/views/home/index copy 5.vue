@@ -1,6 +1,10 @@
 <template>
-  <div>home</div>
-  <router-view></router-view>
+  <div>home7</div>
+  <div>home7</div>
+  <div>home7</div>
+  <div>home7</div>
+  <div>home7</div>
+  <div>home7</div>
 </template>
 
 <script lang="ts">

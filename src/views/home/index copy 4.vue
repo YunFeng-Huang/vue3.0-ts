@@ -1,5 +1,6 @@
 <template>
-  <div>home</div>
+  <div>home6home6home6home6home6home6home6home6</div>
+  <div>home6</div>
   <router-view></router-view>
 </template>
 

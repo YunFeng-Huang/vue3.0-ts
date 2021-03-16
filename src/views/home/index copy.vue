@@ -1,6 +1,5 @@
 <template>
-  <div>home</div>
-  <router-view></router-view>
+  <div>home2home2home2home2home2home2home2</div>
 </template>
 
 <script lang="ts">

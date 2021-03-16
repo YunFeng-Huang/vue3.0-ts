@@ -1,8 +1,9 @@
 import router, { constantRoutes } from "@/router";
-import store, { storeMutationTypes } from "@/store";
+import store, { STOREMUTSTIONTYPES } from "@/store";
 import { RouteRecordRaw } from "vue-router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import { setSessionStorage } from "@/utils/storage";
 NProgress.configure({ showSpinner: false });
 //不经过token校验的路由
 const routesWhiteList = ["/login", "/register", "/callback", "/404", "/403"];
@@ -15,26 +16,18 @@ router.beforeEach(async (to, from, next) => {
             next({ path: "/" });
             NProgress.done();
         } else {
-            console.log(2);
-            const hasRoles = store.getters["permission/permissionList"].length > 0 || true;
-            if (hasRoles) {
+            const menuList = store.getters["permission/menuList"];
+            console.log(router.getRoutes(), 'getRoutes')
+            if (menuList.length > 0 && router.getRoutes().length > 5) {
                 next();
             } else {
                 try {
-                    const finallyRoutes = await store.dispatch("permission/SETROUTERS");
-                    console.log(finallyRoutes, "finallyRoutes");
-                    finallyRoutes.forEach((item: RouteRecordRaw) => {
-                        router.addRoute(item as RouteRecordRaw);
-                    });
-                    console.log(to);
-                    next();
-                    // next({ ...to, replace: true });
+                    await store.dispatch("permission/" + STOREMUTSTIONTYPES.PERMISSION.SETROUTERS);
+                    next({ ...to, replace: true })
                 } catch {
-                    // console.log('catch')
-                    // await store.dispatch('user/resetAll')
-                    next({ path: "/login", replace: true });
-                    NProgress.done();
+                    next({ path: '/login', replace: true })
                 }
+                NProgress.done();
             }
         }
     } else {
@@ -47,6 +40,8 @@ router.beforeEach(async (to, from, next) => {
     }
 });
 router.afterEach((to) => {
-    console.log(to, "after");
+    console.log(to)
+    console.log(router)
+    setSessionStorage('store', JSON.stringify(store.state));
     NProgress.done();
 });

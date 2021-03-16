@@ -1,8 +1,8 @@
 <template>
   <div class="login-container">
     <el-row>
-      <el-col :xs="0" :md="0" :sm="12" :lg="14" :xl="16"></el-col>
-      <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="6">
+      <el-col :xs="0" :md="6" :sm="12" :lg="14" :xl="16"></el-col>
+      <el-col :xs="24" :sm="16" :md="12" :lg="10" :xl="6">
         <div class="login-container-form">
           <div class="login-container-hello">hello!</div>
           <div class="login-container-title">欢迎来到 {{ title }}</div>
@@ -25,7 +25,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, reactive } from "vue";
-import store, { storeMutationTypes } from "@/store";
+import store, { STOREMUTSTIONTYPES } from "@/store";
 import router from "@/router";
 export default defineComponent({
   name: "login",
@@ -36,10 +36,10 @@ export default defineComponent({
       username: "",
       password: "",
     });
-    function handleSubmit() {
-      store.dispatch("user/" + storeMutationTypes.user.SETTOKEN, "token").then((res) => {
-        router.push("/");
-      });
+    async function handleSubmit() {
+      await store.dispatch("user/" + STOREMUTSTIONTYPES.USER.SETTOKEN, "token");
+      // await store.dispatch("permission/" + STOREMUTSTIONTYPES.PERMISSION.SETROUTERS);
+      router.push("/");
     }
     return { title, form, handleSubmit };
   },
