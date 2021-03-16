@@ -1,8 +1,8 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 
 const login = () => import("@/views/login/index.vue");
-const _403 = () => import("@/views/403.vue");
-const _404 = () => import("@/views/404.vue");
+const _403 = () => import("@/views/error/403.vue");
+const _404 = () => import("@/views/error/404.vue");
 const empty = () => import("@/views/layout/component/main-content/content.vue");
 const layout = () => import("@/views/layout/index.vue");
 

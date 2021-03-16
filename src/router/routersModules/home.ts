@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from "vue-router";
 const login = () => import("@/views/login/index.vue");
-const _403 = () => import("@/views/403.vue");
-const _404 = () => import("@/views/404.vue");
+const _403 = () => import("@/views/error/403.vue");
+const _404 = () => import("@/views/error/404.vue");
 const empty = () => import("@/views/layout/component/main-content/content.vue");
 const layout = () => import("@/views/layout/index.vue");
 const home = () => import("@/views/home/index.vue");
@@ -15,7 +15,7 @@ const HomeRouter: Array<RouteRecordRaw> = [
     path: "home",
     name: "home",
     component: home,
-    // redirect: '/home/home2',
+    redirect: '/home/home2',
     children: [
       {
         path: "home2",
