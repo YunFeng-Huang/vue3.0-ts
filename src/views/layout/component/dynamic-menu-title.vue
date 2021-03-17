@@ -33,7 +33,7 @@ export default {
     const item = props.item;
     function gotoRoute(v: RouteRecordRaw) {
       console.log(v);
-      if (v.children) return;
+      if (v.children && v.children.length > 0) return;
       try {
         routers.push({ name: v.path });
       } catch (error) {

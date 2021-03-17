@@ -25,8 +25,8 @@ export enum MUTATIONTYPES {
 }
 
 const mutations = {
-  [MUTATIONTYPES.SETROUTERS](state) {
-    state.menuList = menu;
+  [MUTATIONTYPES.SETROUTERS](state, menuList) {
+    state.menuList = menuList;
   },
 };
 
@@ -36,14 +36,14 @@ const actions = {
     let AllName = [];
     getRouterName(menu, AllName)
     asyncRoutes.map((item) => {
-      if (AllName.includes(item.name)) {
+      if ([...new Set(AllName)].includes(item.name)) {
         router.addRoute('container', item);
         return item
       }
     });
     console.log(router.getRoutes(), 'MUTATIONTYPES.SETROUTERS');
     // router.options.routes[0].children = [...router.options.routes[0].children, ...newAsyncRoutes];
-    commit(MUTATIONTYPES.SETROUTERS);
+    commit(MUTATIONTYPES.SETROUTERS, menu);
     return asyncRoutes;
   },
 };
