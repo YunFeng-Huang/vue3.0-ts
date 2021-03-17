@@ -1,14 +1,14 @@
-import router, { constantRoutes } from "@/router";
+import router from "@/router";
 import store, { STOREMUTSTIONTYPES } from "@/store";
-import { RouteRecordRaw } from "vue-router";
+import { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { setSessionStorage } from "@/utils/storage";
 NProgress.configure({ showSpinner: false });
 //不经过token校验的路由
-const routesWhiteList = ["/login", "/register", "/callback", "/404", "/403"];
+const routesWhiteList = ["/login", "/404", "/403"];
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
     NProgress.start();
     let hasToken = store.getters["user/token"];
     if (hasToken) {
@@ -39,9 +39,7 @@ router.beforeEach(async (to, from, next) => {
         }
     }
 });
-router.afterEach((to) => {
-    console.log(to)
-    console.log(router)
+router.afterEach((to: RouteLocationNormalized) => {
     setSessionStorage('store', JSON.stringify(store.state));
     NProgress.done();
 });
