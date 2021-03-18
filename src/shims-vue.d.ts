@@ -23,10 +23,10 @@ declare module "*.vue" {
 }
 
 
-import { AxiosInstance } from 'axios'
+// import { AxiosInstance } from 'axios'
 
-declare module "@vue/runtime-core" {
-  interface ComponentCustomProperties {
-    $Api?: AxiosInstance
-  }
-}
+// declare module "@vue/runtime-core" {
+//   interface ComponentCustomProperties {
+//     $Api?: AxiosInstance
+//   }
+// }

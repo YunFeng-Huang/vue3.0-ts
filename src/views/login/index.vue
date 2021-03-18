@@ -46,12 +46,12 @@ export default defineComponent({
     });
 
     async function handleSubmit() {
-      console.log(proxy.$Api, "axios.Login1");
+      // console.log(proxy.$Api, "axios.Login1");
       // const axios = inject("axios");
       // axios.Login.login(form);
-      //   await store.dispatch("user/" + STOREMUTSTIONTYPES.USER.SETTOKEN, "token");
-      //   // await store.dispatch("permission/" + STOREMUTSTIONTYPES.PERMISSION.SETROUTERS);
-      //   router.push("/");
+      await store.dispatch("user/" + STOREMUTSTIONTYPES.USER.SETTOKEN, "token");
+      // await store.dispatch("permission/" + STOREMUTSTIONTYPES.PERMISSION.SETROUTERS);
+      router.push("/");
     }
     return { title, form, handleSubmit };
   },
