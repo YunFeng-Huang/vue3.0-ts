@@ -1,14 +1,17 @@
-const files = require.context('./modules', false, /\.js$/)
-const modules: any = {}
-files.keys().forEach(key => {
-  if (key === "./index.ts") return;
-  modules[key.replace(/(\.\/|\.ts)/g, "")] = files(key).default;
+const modules = require.context("./modules", true, /index\.ts$/);
+let obj = {};
+modules.keys().forEach((key) => {
+  const pathDeep = key.split("/").length,
+    moduleConfig = modules(key);
+  if (pathDeep === 3) {
+    obj[`${key.split("/")[1]}`] = moduleConfig.default || moduleConfig;
+  }
+  if (pathDeep === 4) {
+    obj[`${key.split("/")[1] + key.split("/")[2]}`] =
+      moduleConfig.default || moduleConfig;
+  }
 });
-Object.keys(modules).forEach((key) => {
-  modules[key]['namespaced'] = true
-})
-export default modules
-
+export default obj;
 
 // let login = (params) => {
 //   return requset({

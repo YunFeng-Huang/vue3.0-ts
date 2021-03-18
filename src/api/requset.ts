@@ -1,9 +1,11 @@
 // import Vue from 'vue'
-// import router from '@/router'
+import router from '@/router'
 import axios from 'axios';
-import store from '@/store/index.js';
+import store from '@/store';
 // const login_token = process.env.LOGIN_TOKEN;
-import { ElMessage } from 'element-plus';
+// @ts-ignore: Unreachable code error
+import { ElMessage } from 'ElementPlus';
+import { findMatchIndex } from './match';
 const service = axios.create({
     timeout: 1000 * 30,
     withCredentials: true,
@@ -11,20 +13,29 @@ const service = axios.create({
         'Content-Type': 'application/json;charset=UTF-8'
     }
 });
-
+let cancel;
+let map = []
 // 添加请求拦截器
 service.interceptors.request.use(
     function (config: any) {
-        // store.dispatch('general/STARTLOADING',true);
-        // if (config.data&&typeof config.data === 'string'){
-        //     config.url = config.url + config.data;
-        // } else {
-        //     let roleType = store.getters['permission/ROLETYPE'];
-        //     const obj = {
-        //         merchantId: roleType === '21' || roleType === '22'?'':sessionStorage._ServicemerchantId
-        //     };
-        //     config.data = Object.assign({},obj,config.data);
-        // }
+        config.cancelToken = new axios.CancelToken(function (c) {
+            cancel = c
+        })
+        let match = findMatchIndex(map, config)
+        if (match) {
+            // Notification({
+            //     title: '提示',
+            //     message: '请不要重复提交',
+            //     type: 'error'
+            // })
+            cancel('请勿连续点击')
+        } else {
+            map.push({
+                url: config.url,
+                method: config.method,
+                params: config.params
+            })
+        }
         return config;
     },
     function (error: any) {
@@ -32,27 +43,42 @@ service.interceptors.request.use(
         return Promise.reject(error);
     }
 );
-interface resType { status: number; data: { success: boolean; err_msg: any; message: any; err_code: string | undefined; } | undefined; }
 // 响应拦截器即异常处理
 service.interceptors.response.use(
-    (res: resType) => {
-        // store.dispatch('general/STARTLOADING',false);
+    (res) => {
+        let message = res.data && res.data.message ? res.data.message : '请求失败';
         if (res.status === 200) {
-            if (res.data && res.data.success === false) {
-                ElMessage.closeAll();
-                ElMessage.error({
-                    message: res.data.err_msg ? res.data.err_msg : res.data.message
-                });
-                if (res.data !== undefined && res.data.err_code !== undefined && res.data.err_code === '000006') {
+            if (res.data.success === false) {
+                if (res.data) {
+                    ElMessage.closeAll();
+                    if (message.includes('Query execution was interrupted')) {
+                        ElMessage.error({
+                            message: '目前使用的人太多啦，请喝口茶再来！'
+                        });
+                    } else {
+                        ElMessage.error({
+                            message: message
+                        });
+                    }
+                }
+                if (res.data.code === '19995') {
                     store.dispatch('permission/LOGIN_OUT');
                 }
-                return Promise.reject(res);
+                return Promise.reject(message);
             }
-            return res.data;
+            return res;
         }
+        ElMessage.closeAll();
+        ElMessage.error({
+            message: message
+        });
         return Promise.reject(res);
     },
     (err: { response: { status: any; }; message: string; }) => {
+        if (axios.isCancel(err)) {
+            console.log('request cancel ', JSON.stringify(err))
+            return new Promise(() => { })
+        }
         // store.dispatch('general/STARTLOADING',false);
         if (err && err.response) {
             switch (err.response.status) {
@@ -86,4 +112,5 @@ service.interceptors.response.use(
         return Promise.reject(err);
     }
 );
+
 export default service;

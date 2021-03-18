@@ -24,7 +24,14 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive } from "vue";
+import {
+  defineComponent,
+  ref,
+  reactive,
+  getCurrentInstance,
+  inject,
+  onMounted,
+} from "vue";
 import store, { STOREMUTSTIONTYPES } from "@/store";
 import router from "@/router";
 export default defineComponent({
@@ -32,14 +39,19 @@ export default defineComponent({
   components: {},
   setup() {
     const title = ref("title");
+    const { proxy }: any = getCurrentInstance();
     const form = reactive({
       username: "",
       password: "",
     });
+
     async function handleSubmit() {
-      await store.dispatch("user/" + STOREMUTSTIONTYPES.USER.SETTOKEN, "token");
-      // await store.dispatch("permission/" + STOREMUTSTIONTYPES.PERMISSION.SETROUTERS);
-      router.push("/");
+      console.log(proxy.$Api, "axios.Login1");
+      // const axios = inject("axios");
+      // axios.Login.login(form);
+      //   await store.dispatch("user/" + STOREMUTSTIONTYPES.USER.SETTOKEN, "token");
+      //   // await store.dispatch("permission/" + STOREMUTSTIONTYPES.PERMISSION.SETROUTERS);
+      //   router.push("/");
     }
     return { title, form, handleSubmit };
   },

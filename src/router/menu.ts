@@ -6,7 +6,12 @@ export default [
             {
                 title: '订单概况',
                 path: 'home5',
-                children: []
+                children: [
+                    {
+                        title: '呜呜呜',
+                        path: 'home5',
+                    },
+                ]
             },
             {
                 title: '数据看板',
@@ -16,6 +21,7 @@ export default [
                     path: 'home4',
                 },]
             },
+
         ]
     },
     {
@@ -33,8 +39,5 @@ export default [
         path: 'home3',
     },
 
-    {
-        title: '呜呜呜',
-        path: 'home5',
-    },
+
 ]

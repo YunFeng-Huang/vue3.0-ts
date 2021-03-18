@@ -1,6 +1,7 @@
 
 import { createApp } from 'vue'
 
+
 export function loadAllPlugins(app: ReturnType<typeof createApp>) {
   const files = require.context('.', true, /\.ts$/)
   files.keys().forEach(key => {
@@ -9,3 +10,4 @@ export function loadAllPlugins(app: ReturnType<typeof createApp>) {
     }
   })
 }
+
