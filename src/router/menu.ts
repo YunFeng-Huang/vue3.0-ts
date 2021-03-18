@@ -10,6 +10,12 @@ export default [
                     {
                         title: '呜呜呜',
                         path: 'home5',
+                        meta: { //元数据，用来存储额外的自定义信息
+                            "operatePermission": [  //页面中的操作权限
+                                "123",
+                                "234"
+                            ]
+                        }
                     },
                 ]
             },

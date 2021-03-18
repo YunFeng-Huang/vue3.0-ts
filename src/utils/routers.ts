@@ -9,3 +9,18 @@ export function getRouterName(menu, AllName: string[]) {
     });
 }
 
+
+export function mergeRoutersMeta(menuList, to) {
+    menuList.map((v) => {
+        if (v.children) {
+            mergeRoutersMeta(v.children, to);
+        } else {
+            if (to.name == v.path) {
+                to.meta = {
+                    ...to.meta, ...v.meta, ...{ 'title': v.title }
+                };
+            };
+        }
+    })
+    return menuList;
+}

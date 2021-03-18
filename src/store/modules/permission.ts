@@ -12,12 +12,13 @@ import { createRouter } from "vue-router";
 export interface permissionState {
   menuList?: RouteRecordRaw[];
   isSidebarNavCollapse?: Boolean;
+  // menu?: RouteRecordRaw[];
 }
 const state: permissionState = {
 
-  menuList: [],
+  menuList: menu,
   isSidebarNavCollapse: false,
-
+  // menu: menu
 };
 
 export enum MUTATIONTYPES {
@@ -32,7 +33,8 @@ const mutations = {
 
 
 const actions = {
-  async [MUTATIONTYPES.SETROUTERS]({ commit }: any) {
+  async [MUTATIONTYPES.SETROUTERS]({ commit, state }: any) {
+    let menu = JSON.parse(JSON.stringify(state.menuList));
     let AllName = [];
     getRouterName(menu, AllName)
     asyncRoutes.map((item) => {
@@ -41,8 +43,6 @@ const actions = {
         return item
       }
     });
-    console.log(router.getRoutes(), 'MUTATIONTYPES.SETROUTERS');
-    // router.options.routes[0].children = [...router.options.routes[0].children, ...newAsyncRoutes];
     commit(MUTATIONTYPES.SETROUTERS, menu);
     return asyncRoutes;
   },

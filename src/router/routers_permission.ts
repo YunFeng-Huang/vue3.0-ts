@@ -4,6 +4,7 @@ import { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { setSessionStorage } from "@/utils/storage";
+import { mergeRoutersMeta } from "@/utils/routers";
 NProgress.configure({ showSpinner: false });
 //不经过token校验的路由
 const routesWhiteList = ["/login", "/404", "/403"];
@@ -17,7 +18,6 @@ router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormal
             NProgress.done();
         } else {
             const menuList = store.getters["permission/menuList"];
-            console.log(router.getRoutes(), 'getRoutes')
             if (menuList.length > 0 && router.getRoutes().length > 5) {
                 next();
             } else {
@@ -40,6 +40,9 @@ router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormal
     }
 });
 router.afterEach((to: RouteLocationNormalized) => {
+    const menuList = store.getters["permission/menuList"];
+    mergeRoutersMeta(menuList, to);
+    console.log(to, 'to');
     setSessionStorage('store', JSON.stringify(store.state));
     NProgress.done();
 });
