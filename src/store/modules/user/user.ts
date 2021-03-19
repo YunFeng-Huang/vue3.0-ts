@@ -21,7 +21,7 @@ const mutations = {
 }
 
 const actions = {
-    [MUTATIONTYPES.SETTOKEN]({ commit }, token: string) {
+    [MUTATIONTYPES.SETTOKEN]({ commit }: any, token: string) {
         console.log(token, 'value');
         commit(MUTATIONTYPES.SETTOKEN, token)
     },

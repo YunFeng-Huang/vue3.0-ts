@@ -12,7 +12,7 @@ const state: permissionState = {
 };
 
 const mutations = {
-  [MUTATIONTYPES.SETROUTERS](state, menuList: RouteRecordRaw[]) {
+  [MUTATIONTYPES.SETROUTERS](state: permissionState, menuList: RouteRecordRaw[]) {
     state.menuList = menuList;
   },
 };
@@ -21,12 +21,12 @@ const mutations = {
 const actions = {
   async [MUTATIONTYPES.SETROUTERS]({ commit, state }: any) {
     let menu = JSON.parse(JSON.stringify(state.menuList));
-    let AllName = [];
+    let AllName: string[] = [];
     getRouterName(menu, AllName);
 
     asyncRoutes.map((item) => {
       console.log(item)
-      if ([...new Set(AllName)].includes(item.name)) {
+      if ([...new Set(AllName)].includes(item.name as RouteRecordRaw)) {
         router.addRoute('container', item);
         return item
       }

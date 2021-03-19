@@ -1,6 +1,6 @@
 // import Vue from 'vue'
 import router from '@/router'
-import axios from 'axios';
+import axios, { Canceler } from 'axios';
 import store from '@/store';
 // const login_token = process.env.LOGIN_TOKEN;
 // @ts-ignore: Unreachable code error
@@ -13,8 +13,8 @@ const service = axios.create({
         'Content-Type': 'application/json;charset=UTF-8'
     }
 });
-let cancel;
-let map = []
+let cancel: Canceler;
+let map: { url: any; method: any; params: any; }[] = []
 // 添加请求拦截器
 service.interceptors.request.use(
     function (config: any) {

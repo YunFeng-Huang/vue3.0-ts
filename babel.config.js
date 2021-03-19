@@ -3,6 +3,7 @@ module.exports = {
     "@vue/cli-plugin-babel/preset"
   ],
   "plugins": [
+    'dynamic-import-node',
     [
       "component",
       {

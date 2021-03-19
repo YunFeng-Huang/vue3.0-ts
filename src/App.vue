@@ -1,17 +1,18 @@
 <template>
   <div class="app">
-    <router-view v-if="isRouterAlive" />
+    <router-view />
   </div>
 </template>
 
 <script lang="ts">
+// v-if="isRouterAlive"
 // import "vue-transition.css";
 export default {
-  provide() {
-    return {
-      reload: this.reload,
-    };
-  },
+  // provide() {
+  //   return {
+  //     reload: this.reload,
+  //   };
+  // },
 
   data() {
     return {
@@ -21,14 +22,12 @@ export default {
 
   methods: {
     //重载
-
-    reload() {
-      this.isRouterAlive = false;
-
-      this.$nextTick(function () {
-        this.isRouterAlive = true;
-      });
-    },
+    // reload() {
+    //   this.isRouterAlive = false;
+    //   this.$nextTick(function () {
+    //     this.isRouterAlive = true;
+    //   });
+    // },
   },
 };
 </script>

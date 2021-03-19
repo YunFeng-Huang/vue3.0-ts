@@ -1,5 +1,6 @@
+import { RouteLocationNormalized } from "vue-router";
 
-export function getRouterName(menu, AllName: string[]) {
+export function getRouterName(menu: any[], AllName: string[]) {
     return menu.map((v, i) => {
         if (v.children) {
             getRouterName(v.children, AllName)
@@ -10,7 +11,7 @@ export function getRouterName(menu, AllName: string[]) {
 }
 
 
-export function mergeRoutersMeta(menuList, to) {
+export function mergeRoutersMeta(menuList: any[], to: RouteLocationNormalized) {
     menuList.map((v) => {
         if (v.children) {
             mergeRoutersMeta(v.children, to);

@@ -28,14 +28,7 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  reactive,
-  getCurrentInstance,
-  inject,
-  onMounted,
-} from "vue";
+import { defineComponent, ref, reactive } from "vue";
 import store, { STOREMUTSTIONTYPES } from "@/store";
 import router from "@/router";
 import axios from "@/api";
@@ -43,8 +36,7 @@ import menuList from "@/router/menu";
 export default defineComponent({
   name: "login",
   components: {},
-  setup(props, ctx) {
-    console.log(ctx);
+  setup() {
     const title = ref("title");
     const form = reactive({
       loginName: "sxwl01",
@@ -54,14 +46,14 @@ export default defineComponent({
     });
     function handleSubmit() {
       axios.Login.login(form)
-        .then(async (res) => {
-          login(res);
+        .then(async (res: any) => {
+          login();
         })
-        .catch((res) => {
-          login(res);
+        .catch((res: any) => {
+          login();
         });
     }
-    const login = async (res) => {
+    const login = async () => {
       await store.dispatch("user/" + STOREMUTSTIONTYPES.USER.SETTOKEN, "login");
       store.commit("permission/" + STOREMUTSTIONTYPES.PERMISSION.SETROUTERS, menuList);
       router.push("/");

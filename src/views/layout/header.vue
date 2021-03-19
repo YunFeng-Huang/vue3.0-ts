@@ -32,11 +32,10 @@ import {
 } from "vue";
 export default defineComponent({
   setup(props, ctx) {
-    // const { proxy }: any = getCurrentInstance();
-    // proxy.$message("mesage");
-    const handleCommand = (command) => {
-      const { proxy }: any = getCurrentInstance();
-      (proxy as any).$message("mesage");
+    const { proxy }: any = getCurrentInstance();
+    const handleCommand = () => {
+      console.log(proxy, "proxy");
+      proxy.$message("mesage");
     };
     // const store = useStore();
     // // const sidebarMenu = computed(() => store.state["permission"].sidebarMenu);

@@ -1,4 +1,4 @@
-export function findMatchIndex(map, config) {
+export function findMatchIndex(map: any[], config: { url: any; method: any; params: {} | undefined }) {
     return map.some((item) => {
         return (item.url === config.url && item.method === config.method && diff(item.params, config.params))
     })

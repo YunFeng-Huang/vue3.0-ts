@@ -29,9 +29,9 @@ export default {
   props: {
     item: Object,
   },
-  setup(props) {
+  setup(props: { item }) {
     const item = props.item;
-    function gotoRoute(v: RouteRecordRaw) {
+    function gotoRoute(v) {
       console.log(v);
       if (v.children && v.children.length > 0) return;
       try {

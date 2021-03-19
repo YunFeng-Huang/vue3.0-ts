@@ -1,22 +1,10 @@
-/* eslint-disable */
 
-// 文件路径 shims-vue.d.ts
-declare module "*.vue" {
-  import type { DefineComponent } from "vue";
-  const component: DefineComponent<{}, {}, any>;
-  export default component;
+
+import { ElMessage } from 'ElementPlus'
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    $message: ElMessage
+  }
 }
 
-// declare module '@vue/runtime-core' {
-//   interface ComponentCustomProperties {
-//     $api: any,// 这里可以用$Api具体的类型代替any
-//     $message: any
-//   }
-// }
-
-// import { apiType } from "./api/index_d";
-// declare module "@vue/runtime-core" {
-//   interface ComponentCustomProperties {
-//     $api: apiType;
-//   }
-// }
+declare module 'nprogress'

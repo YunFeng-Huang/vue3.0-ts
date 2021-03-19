@@ -6,6 +6,21 @@ const _404 = () => import("@/views/error/404.vue");
 const empty = () => import("@/views/layout/component/main-content/index.vue");
 const layout = () => import("@/views/layout/index.vue");
 
+
+export interface RouterType {
+  path?: string;
+  name?: string;
+  component?: () => void;
+  redirect?: string;
+  meta?: any;
+  children?: chilren[];
+}
+interface chilren {
+  path?: string;
+  meta?: any;
+  name?: string,
+  component: () => void,
+}
 export const constantRoutes: Array<RouteRecordRaw> = [
   {
     path: "/",

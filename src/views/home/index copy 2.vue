@@ -4,7 +4,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from "vue";
+import { defineComponent } from "vue";
 import store from "@/store";
 import router from "@/router";
 export default defineComponent({
