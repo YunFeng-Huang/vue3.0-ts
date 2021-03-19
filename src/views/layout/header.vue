@@ -24,14 +24,19 @@
 import sidebarNav from "./component/sidebar-nav.vue";
 // import mainContent from "./component/main-content/index.vue";
 import { useStore } from "vuex";
-import { computed, defineComponent, getCurrentInstance } from "vue";
+import {
+  ComponentPublicInstance,
+  computed,
+  defineComponent,
+  getCurrentInstance,
+} from "vue";
 export default defineComponent({
   setup(props, ctx) {
     // const { proxy }: any = getCurrentInstance();
     // proxy.$message("mesage");
     const handleCommand = (command) => {
       const { proxy }: any = getCurrentInstance();
-      // proxy.$message("mesage");
+      (proxy as any).$message("mesage");
     };
     // const store = useStore();
     // // const sidebarMenu = computed(() => store.state["permission"].sidebarMenu);

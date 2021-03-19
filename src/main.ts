@@ -24,7 +24,6 @@ const app = createApp({
 loadAllPlugins(app);
 
 app.config.globalProperties.$api = axios;
-
 app.use(store).use(router).mount("#app");
 
 // app.config.errorHandler = function (err, vm, info) {
