@@ -1,32 +1,19 @@
 // @ts-ignore: Unreachable code error
 import router, { asyncRoutes, constantRoutes, RouteRecordRaw } from "@/router";
 import { getRouterName } from "@/utils/routers";
-import HomeRouter from "@/router/routersModules/home";
-import menu from "@/router/menu";
-import { createRouter } from "vue-router";
-// interface permissionListType {
-//   title?: string;
-//   path?: string;
-//   children?: [];
-// }
-export interface permissionState {
-  menuList?: RouteRecordRaw[];
-  isSidebarNavCollapse?: Boolean;
-  // menu?: RouteRecordRaw[];
-}
-const state: permissionState = {
+// import HomeRouter from "@/router/routersModules/home";
+// import menuList from "@/router/menu";
+// import { createRouter } from "vue-router";
+import { permissionState, MUTATIONTYPES } from "./permission_d";
 
-  menuList: menu,
+const state: permissionState = {
+  menuList: [],
   isSidebarNavCollapse: false,
-  // menu: menu
 };
 
-export enum MUTATIONTYPES {
-  SETROUTERS = "SETROUTERS",
-}
-
 const mutations = {
-  [MUTATIONTYPES.SETROUTERS](state, menuList) {
+  [MUTATIONTYPES.SETROUTERS](state, menuList: RouteRecordRaw[]) {
+    console.log(menuList, 'menuList');
     state.menuList = menuList;
   },
 };
@@ -36,13 +23,19 @@ const actions = {
   async [MUTATIONTYPES.SETROUTERS]({ commit, state }: any) {
     let menu = JSON.parse(JSON.stringify(state.menuList));
     let AllName = [];
-    getRouterName(menu, AllName)
+    console.log(menu, 'menu1111');
+    getRouterName(menu, AllName);
+    console.log(menu, '2222');
+
     asyncRoutes.map((item) => {
+      console.log(item)
       if ([...new Set(AllName)].includes(item.name)) {
         router.addRoute('container', item);
         return item
       }
     });
+    console.log(router.getRoutes(), "router.getRoutes()");
+    console.log(menu, 'menu');
     commit(MUTATIONTYPES.SETROUTERS, menu);
     return asyncRoutes;
   },

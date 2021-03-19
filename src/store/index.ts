@@ -1,8 +1,11 @@
 import Vue from "vue";
 import Vuex, { createLogger, Store } from "vuex";
-import permission, { MUTATIONTYPES as permissionType } from "./modules/permission";
-import setting, { MUTATIONTYPES as settingType } from "./modules/setting";
-import user, { MUTATIONTYPES as userType } from "./modules/user";
+import permission from "./modules/permission/permission";
+import { MUTATIONTYPES as permissionType } from "./modules/permission/permission_d";
+import setting from "./modules/setting/setting";
+import { MUTATIONTYPES as settingType } from "./modules/setting/setting_d";
+import user from "./modules/user/user";
+import { MUTATIONTYPES as userType } from "./modules/user/user_d";
 
 export const STOREMUTSTIONTYPES = {
   PERMISSION: permissionType,

@@ -2,17 +2,11 @@
 
 // @ts-ignore: Unreachable code error
 import { createStore } from 'vuex'
-interface settingStateType {
-    collapse: boolean,
-}
+import { MUTATIONTYPES, settingStateType } from './setting_d';
+
 
 const state: settingStateType = {
     collapse: true,
-}
-
-
-export enum MUTATIONTYPES {
-    TOGGLECOLLAPSE = 'TOGGLECOLLAPSE',
 }
 
 const mutations = {

@@ -1,21 +1,11 @@
 // @ts-ignore: Unreachable code error
 import { createStore } from 'vuex'
-interface userStateType {
-    token: String,
-    username: string,
-    avatar: string,
-}
+import { MUTATIONTYPES, userStateType } from './user_d'
 
 const state: userStateType = {
     token: '',
     username: '',
     avatar: '',
-}
-
-export enum MUTATIONTYPES {
-    SETTOKEN = 'SETTOKEN',
-    SETUSERNAME = 'SETUSERNAME',
-    SETAVATAR = 'SETAVATAR',
 }
 
 const mutations = {

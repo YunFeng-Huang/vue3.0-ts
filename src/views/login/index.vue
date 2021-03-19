@@ -8,7 +8,7 @@
           <div class="login-container-title">欢迎来到 {{ title }}</div>
           <el-form :model="form">
             <el-form-item label="用户名">
-              <el-input v-model="form.username" placeholder="用户名"></el-input>
+              <el-input v-model="form.loginName" placeholder="用户名"></el-input>
             </el-form-item>
             <el-form-item label="密码">
               <el-input v-model="form.password" placeholder="密码"></el-input>
@@ -34,28 +34,41 @@ import {
 } from "vue";
 import store, { STOREMUTSTIONTYPES } from "@/store";
 import router from "@/router";
+import axios from "@/api";
+import menuList from "@/router/menu";
 export default defineComponent({
   name: "login",
   components: {},
-  setup() {
+  setup(props, ctx) {
+    console.log(ctx);
     const title = ref("title");
-    const { proxy }: any = getCurrentInstance();
+    // const { proxy }: any = getCurrentInstance();
     const form = reactive({
-      username: "",
-      password: "",
+      loginName: "sxwl01",
+      password: "1qaz2wsx3edc",
+      merchantCode: "sxwl",
+      checkCode: "asdf",
     });
-
-    async function handleSubmit() {
-      // console.log(proxy.$Api, "axios.Login1");
+    function handleSubmit() {
+      // console.log(proxy.$api, "axios.Login1");
       // const axios = inject("axios");
-      // axios.Login.login(form);
-      await store.dispatch("user/" + STOREMUTSTIONTYPES.USER.SETTOKEN, "token");
-      // await store.dispatch("permission/" + STOREMUTSTIONTYPES.PERMISSION.SETROUTERS);
-      router.push("/");
+      axios.Login.login(form)
+        .then(async (res) => {
+          login(res);
+        })
+        .catch((res) => {});
     }
+
     return { title, form, handleSubmit };
   },
 });
+
+async function login(res) {
+  await store.dispatch("user/" + STOREMUTSTIONTYPES.USER.SETTOKEN, "login");
+  await store.commit("permission/" + STOREMUTSTIONTYPES.PERMISSION.SETROUTERS, menuList);
+  console.log(222);
+  router.push("/");
+}
 </script>
 <style lang="scss" scoped>
 .login-container {

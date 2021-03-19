@@ -23,11 +23,10 @@ service.interceptors.request.use(
         })
         let match = findMatchIndex(map, config)
         if (match) {
-            // Notification({
-            //     title: '提示',
-            //     message: '请不要重复提交',
-            //     type: 'error'
-            // })
+            ElMessage.closeAll();
+            ElMessage.error({
+                message: '请勿连续点击'
+            });
             cancel('请勿连续点击')
         } else {
             map.push({
@@ -35,6 +34,9 @@ service.interceptors.request.use(
                 method: config.method,
                 params: config.params
             })
+            setTimeout(() => {
+                map = []
+            }, 2000)
         }
         return config;
     },
@@ -66,15 +68,16 @@ service.interceptors.response.use(
                 }
                 return Promise.reject(message);
             }
-            return res;
+            return res.data;
         }
         ElMessage.closeAll();
         ElMessage.error({
             message: message
         });
-        return Promise.reject(res);
+        return Promise.reject(message);
     },
     (err: { response: { status: any; }; message: string; }) => {
+        console.log(err, 'err');
         if (axios.isCancel(err)) {
             console.log('request cancel ', JSON.stringify(err))
             return new Promise(() => { })

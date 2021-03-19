@@ -23,7 +23,7 @@ const app = createApp({
 // 加载所有插件
 loadAllPlugins(app);
 
-app.config.globalProperties.$Api = axios;
+app.config.globalProperties.$api = axios;
 
 app.use(store).use(router).mount("#app");
 

@@ -10,7 +10,7 @@ const home2 = () => import("@/views/home/index copy 2.vue");
 const home3 = () => import("@/views/home/index copy 3.vue");
 const home4 = () => import("@/views/home/index copy 4.vue");
 const home5 = () => import("@/views/home/index copy 5.vue");
-import '@/views/home/index copy 5.vue'
+// import '@/views/home/index copy 5.vue'
 const HomeRouter: Array<RouteRecordRaw> = [
   {
     path: "home",
@@ -32,6 +32,7 @@ const HomeRouter: Array<RouteRecordRaw> = [
             component: home5,
             meta: {
               title: "home5",
+              keep: "none",
             },
           },
         ]

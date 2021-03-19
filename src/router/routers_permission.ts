@@ -1,6 +1,6 @@
 import router from "@/router";
 import store, { STOREMUTSTIONTYPES } from "@/store";
-import { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
+import { NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw } from "vue-router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { setSessionStorage } from "@/utils/storage";
@@ -40,9 +40,8 @@ router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormal
     }
 });
 router.afterEach((to: RouteLocationNormalized) => {
-    const menuList = store.getters["permission/menuList"];
+    const menuList: RouteRecordRaw[] = store.getters["permission/menuList"];
     mergeRoutersMeta(menuList, to);
-    console.log(to, 'to');
     setSessionStorage('store', JSON.stringify(store.state));
     NProgress.done();
 });

@@ -14,7 +14,8 @@ let login = (params: any) => {
     return requset({
         url: requsetUrl(api['login']),
         method: 'post',
-        data: requsetParam(params)
+        data: params
+        // params: requsetParam(params)
     });
 };
 let logout = (params: any) => {

@@ -46,14 +46,12 @@ module.exports = {
     },
     proxy: {
       // 配置跨域
-      '/api/': {
-        target: 'https://gateway.iuctrip.com/destination-applet-service/',
-        // target: 'https://devol-gateway.iuctrip.com/destination-applet-service/',
-        // target: 'https://d-applet.iuctrip.com',
+      '/v1/': {
+        target: 'https://dev-gateway.iuctrip.com/zhihuijingqu-service/',
         // ws:true,
         changOrigin: true,
         pathRewrite: {
-          '^/api': ''
+          '^/v1': ''
         }
       }
     }
