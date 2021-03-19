@@ -1,10 +1,11 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 
-const login = resolve => require(['@/views/login/index.vue'], resolve);
-const _403 = resolve => require(['@/views/error/403.vue'], resolve);
-const _404 = resolve => require(['@/views/error/404.vue'], resolve);
-// const empty = resolve => require(['@/views/layout/component/main-content/index.vue'], resolve);
-const layout = resolve => require(['@/views/layout/index.vue'], resolve);
+const login = () => import("@/views/login/index.vue");
+const _403 = () => import("@/views/error/403.vue");
+const _404 = () => import("@/views/error/404.vue");
+const empty = () => import("@/views/layout/component/main-content/index.vue");
+const layout = () => import("@/views/layout/index.vue");
+
 export const constantRoutes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -44,7 +45,7 @@ export const constantRoutes: Array<RouteRecordRaw> = [
   {
     path: "/*",
     redirect: "/404",
-    component: () => { },
+    component: empty,
   },
 ];
 

@@ -31,7 +31,7 @@ export default defineComponent({
     // proxy.$message("mesage");
     const handleCommand = (command) => {
       const { proxy }: any = getCurrentInstance();
-      proxy.$message("mesage");
+      // proxy.$message("mesage");
     };
     // const store = useStore();
     // // const sidebarMenu = computed(() => store.state["permission"].sidebarMenu);
