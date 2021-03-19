@@ -1,5 +1,6 @@
 
 
+// @ts-ignore: Unreachable code error
 import { ElMessage } from 'ElementPlus'
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -7,4 +8,5 @@ declare module '@vue/runtime-core' {
   }
 }
 
+// @ts-ignore: Unreachable code error
 declare module 'nprogress'
