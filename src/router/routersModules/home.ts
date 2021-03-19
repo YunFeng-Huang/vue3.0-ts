@@ -1,15 +1,13 @@
 import { RouteRecordRaw } from "vue-router";
-const login = () => import("@/views/login/index.vue");
-const _403 = () => import("@/views/error/403.vue");
-const _404 = () => import("@/views/error/404.vue");
-const empty = () => import("@/views/layout/component/main-content/content.vue");
-const layout = () => import("@/views/layout/index.vue");
-const home = () => import("@/views/home/index.vue");
-const home1 = () => import("@/views/home/index copy.vue");
-const home2 = () => import("@/views/home/index copy 2.vue");
-const home3 = () => import("@/views/home/index copy 3.vue");
-const home4 = () => import("@/views/home/index copy 4.vue");
-const home5 = () => import("@/views/home/index copy 5.vue");
+
+
+const home = resolve => require(['@/views/home/index.vue'], resolve);
+const home1 = resolve => require(['@/views/home/index copy.vue'], resolve);
+const home2 = resolve => require(['@/views/home/index copy 2.vue'], resolve);
+const home3 = resolve => require(['@/views/home/index copy 3.vue'], resolve);
+const home4 = resolve => require(['@/views/home/index copy 4.vue'], resolve);
+const home5 = resolve => require(['@/views/home/index copy 5.vue'], resolve);
+
 // import '@/views/home/index copy 5.vue'
 const HomeRouter: Array<RouteRecordRaw> = [
   {

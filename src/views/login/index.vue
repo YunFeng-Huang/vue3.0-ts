@@ -11,7 +11,11 @@
               <el-input v-model="form.loginName" placeholder="用户名"></el-input>
             </el-form-item>
             <el-form-item label="密码">
-              <el-input v-model="form.password" placeholder="密码"></el-input>
+              <el-input
+                type="password"
+                v-model="form.password"
+                placeholder="密码"
+              ></el-input>
             </el-form-item>
             <el-form-item>
               <el-button @click="handleSubmit"> 登录 </el-button>
@@ -42,7 +46,6 @@ export default defineComponent({
   setup(props, ctx) {
     console.log(ctx);
     const title = ref("title");
-    // const { proxy }: any = getCurrentInstance();
     const form = reactive({
       loginName: "sxwl01",
       password: "1qaz2wsx3edc",
@@ -50,25 +53,22 @@ export default defineComponent({
       checkCode: "asdf",
     });
     function handleSubmit() {
-      // console.log(proxy.$api, "axios.Login1");
-      // const axios = inject("axios");
       axios.Login.login(form)
         .then(async (res) => {
           login(res);
         })
-        .catch((res) => {});
+        .catch((res) => {
+          login(res);
+        });
     }
-
+    const login = async (res) => {
+      await store.dispatch("user/" + STOREMUTSTIONTYPES.USER.SETTOKEN, "login");
+      store.commit("permission/" + STOREMUTSTIONTYPES.PERMISSION.SETROUTERS, menuList);
+      router.push("/");
+    };
     return { title, form, handleSubmit };
   },
 });
-
-async function login(res) {
-  await store.dispatch("user/" + STOREMUTSTIONTYPES.USER.SETTOKEN, "login");
-  await store.commit("permission/" + STOREMUTSTIONTYPES.PERMISSION.SETROUTERS, menuList);
-  console.log(222);
-  router.push("/");
-}
 </script>
 <style lang="scss" scoped>
 .login-container {

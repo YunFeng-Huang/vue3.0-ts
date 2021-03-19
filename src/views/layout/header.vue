@@ -2,13 +2,19 @@
   <header class="header-app">
     <div>这里是文案</div>
     <div class="header-right">
-      <el-dropdown>
+      <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
-          <!-- <img :src="userImg" alt="" class="userImg" />
-          <span v-if="goodsName">{{ goodsName }}</span> -->
-          <span>用户名，欢迎回来</span>
-          <i class="el-icon-arrow-down el-icon--right"></i>
+          下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item command="a">黄金糕</el-dropdown-item>
+            <el-dropdown-item command="b">狮子头</el-dropdown-item>
+            <el-dropdown-item command="c">螺蛳粉</el-dropdown-item>
+            <el-dropdown-item command="d" disabled>双皮奶</el-dropdown-item>
+            <el-dropdown-item command="e" divided>蚵仔煎</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
       </el-dropdown>
     </div>
   </header>
@@ -18,9 +24,15 @@
 import sidebarNav from "./component/sidebar-nav.vue";
 // import mainContent from "./component/main-content/index.vue";
 import { useStore } from "vuex";
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, getCurrentInstance } from "vue";
 export default defineComponent({
-  setup() {
+  setup(props, ctx) {
+    // const { proxy }: any = getCurrentInstance();
+    // proxy.$message("mesage");
+    const handleCommand = (command) => {
+      const { proxy }: any = getCurrentInstance();
+      proxy.$message("mesage");
+    };
     // const store = useStore();
     // // const sidebarMenu = computed(() => store.state["permission"].sidebarMenu);
     // // const currentMenu = computed(() => store.state["permission"].currentMenu);
@@ -43,15 +55,9 @@ export default defineComponent({
     // function mouseleave() {
     //   // store.dispatch("permission/DED_THREEMENU");
     // }
-    // return {
-    //   // sidebarMenu,
-    //   mouseleave,
-    //   isSidebarNavCollapse,
-    //   // currentMenu,
-    //   twosidebarMenu,
-    //   threeSidebarMenu,
-    //   show,
-    // };
+    return {
+      handleCommand,
+    };
   },
   components: {
     sidebarNav,

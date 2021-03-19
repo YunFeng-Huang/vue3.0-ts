@@ -10,6 +10,7 @@
   "dependencies": {
     "@types/js-md5": "^0.4.2",
     "axios": "^0.21.1",
+    "babel-plugin-component": "^1.1.1",
     "core-js": "^3.9.1",
     "css-loader": "^5.1.1",
     "inline-style-loader": "0.0.5",

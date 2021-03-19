@@ -15,7 +15,7 @@
 <script lang="ts">
 import sidebarNav from "./component/sidebar-nav.vue";
 import vHeader from "./header.vue";
-import mainContent from "./component/main-content/content.vue";
+import mainContent from "./component/main-content/index.vue";
 import { useStore } from "vuex";
 import { computed, defineComponent } from "vue";
 export default defineComponent({
