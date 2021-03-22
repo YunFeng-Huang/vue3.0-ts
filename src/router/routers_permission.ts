@@ -9,39 +9,52 @@ NProgress.configure({ showSpinner: false });
 //不经过token校验的路由
 const routesWhiteList = ["/login", "/404", "/403"];
 
-router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
-    NProgress.start();
-    let hasToken = store.getters["user/token"];
-    if (hasToken) {
-        if (to.path === "/login") {
-            next({ path: "/" });
-            NProgress.done();
+router.beforeEach(
+    async (
+        to: RouteLocationNormalized,
+        _from: RouteLocationNormalized,
+        next: NavigationGuardNext
+    ) => {
+        NProgress.start();
+        let hasToken = store.getters["permission/token"];
+        console.log(hasToken, 'hasToken');
+
+        if (hasToken) {
+            if (to.path === "/login") {
+                next({ path: "/" });
+                NProgress.done();
+            } else {
+                const menuList = store.getters["permission/menuList"];
+                console.log(menuList, 'hasToken');
+                if (menuList.length > 0 && router.getRoutes().length > 5) {
+                    next();
+                } else {
+                    try {
+                        await store.dispatch(
+                            "permission/" + STOREMUTSTIONTYPES.PERMISSION.SETROUTERS
+                        );
+                        next({ ...to, replace: true });
+                    } catch {
+                        next({ path: "/login", replace: true });
+                    }
+                    NProgress.done();
+                }
+            }
         } else {
-            const menuList = store.getters["permission/menuList"];
-            if (menuList.length > 0 && router.getRoutes().length > 5) {
+            if (routesWhiteList.includes(to.path)) {
                 next();
             } else {
-                try {
-                    await store.dispatch("permission/" + STOREMUTSTIONTYPES.PERMISSION.SETROUTERS);
-                    next({ ...to, replace: true })
-                } catch {
-                    next({ path: '/login', replace: true })
-                }
+                next({ path: "/login", replace: true });
                 NProgress.done();
             }
         }
-    } else {
-        if (routesWhiteList.includes(to.path)) {
-            next();
-        } else {
-            next({ path: "/login", replace: true });
-            NProgress.done();
-        }
     }
-});
+);
 router.afterEach((to: RouteLocationNormalized) => {
     const menuList: RouteRecordRaw[] = store.getters["permission/menuList"];
     mergeRoutersMeta(menuList, to);
-    setSessionStorage('store', JSON.stringify(store.state));
+    setSessionStorage("store", JSON.stringify(store.state));
+    // console.log(to);
+    // document.title = (to.meta.title) as string;
     NProgress.done();
 });

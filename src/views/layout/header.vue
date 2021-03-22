@@ -2,66 +2,42 @@
   <header class="header-app">
     <div>这里是文案</div>
     <div class="header-right">
-      <el-dropdown @command="handleCommand">
+      <el-dropdown>
         <span class="el-dropdown-link">
           用户名，欢迎回来<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item command="a">退出登录</el-dropdown-item>
+            <el-dropdown-item @click="loginOut">退出登录</el-dropdown-item>
+            <el-dropdown-item @click="resetPass">忘记密码</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
     </div>
   </header>
+  <v-reset ref="reset"></v-reset>
 </template>
 
 <script lang="ts">
-import sidebarNav from "./component/sidebar-nav.vue";
-// import mainContent from "./component/main-content/index.vue";
-import { useStore } from "vuex";
-import {
-  ComponentPublicInstance,
-  computed,
-  defineComponent,
-  getCurrentInstance,
-} from "vue";
+import VReset from "./dialog/reset.vue";
+import store, { STOREMUTSTIONTYPES } from "@/store";
+import { computed, defineComponent, getCurrentInstance } from "vue";
 export default defineComponent({
   setup(props, ctx) {
     const { proxy }: any = getCurrentInstance();
-    const handleCommand = () => {
-      console.log(proxy, "proxy");
-      proxy.$message("mesage");
+    console.log(proxy, "proxy");
+    const loginOut = async (val: string) => {
+      await store.dispatch("permission/" + STOREMUTSTIONTYPES.PERMISSION.LOGOUT);
     };
-    // const store = useStore();
-    // // const sidebarMenu = computed(() => store.state["permission"].sidebarMenu);
-    // // const currentMenu = computed(() => store.state["permission"].currentMenu);
-    // const isSidebarNavCollapse = computed(
-    //   () => store.state["permission"].isSidebarNavCollapse
-    // );
-    // console.log(isSidebarNavCollapse.value, "isSidebarNavCollapse");
-    // const twosidebarMenu = computed(() => store.state["permission"].twosidebarMenu);
-    // // const routes = computed(() => {
-    // //   console.log(store.state["permission"].routes, 1111);
-    // //   return store.state["permission"].routes;
-    // // });
-    // console.log(twosidebarMenu.value, "twosidebarMenu");
-    // const threeSidebarMenu = computed(() => store.state["permission"].threeSidebarMenu);
-    // const show = computed(
-    //   store.state["permission"].threeSidebarMenu.some((v) => {
-    //     return v.meta;
-    //   })
-    // );
-    // function mouseleave() {
-    //   // store.dispatch("permission/DED_THREEMENU");
-    // }
+    const resetPass = async (val: string) => {
+      // proxy.$refs.reset.password = true;
+    };
     return {
-      handleCommand,
+      loginOut,
+      resetPass,
     };
   },
-  components: {
-    sidebarNav,
-  },
+  components: { VReset },
 });
 </script>
 
@@ -82,7 +58,9 @@ export default defineComponent({
 .el-icon-arrow-down {
   font-size: 12px;
 }
-
+/deep/ .el-form-item__label {
+  color: #fff;
+}
 .header-app {
   background: #212844;
   color: #fff;

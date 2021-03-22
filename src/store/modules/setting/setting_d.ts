@@ -1,4 +1,4 @@
-export interface settingStateType {
+export interface SETTINGSTATETYPE {
     collapse: boolean,
 }
 export enum MUTATIONTYPES {

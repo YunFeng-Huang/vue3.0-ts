@@ -5,8 +5,8 @@
       <el-col :xs="24" :sm="16" :md="12" :lg="10" :xl="6">
         <div class="login-container-form">
           <div class="login-container-hello">hello!</div>
-          <div class="login-container-title">欢迎来到 {{ title }}</div>
-          <el-form :model="form">
+          <div class="login-container-title">欢迎登录售后运营平台</div>
+          <el-form :model="form" label-width="80px">
             <el-form-item label="用户名">
               <el-input v-model="form.loginName" placeholder="用户名"></el-input>
             </el-form-item>
@@ -17,8 +17,21 @@
                 placeholder="密码"
               ></el-input>
             </el-form-item>
+            <el-form-item label="企业号">
+              <el-input v-model="form.merchantCode" placeholder="企业号"></el-input>
+            </el-form-item>
+            <el-form-item label="验证码">
+              <el-col :span="16">
+                <el-input v-model="form.checkCode" placeholder="验证码"></el-input>
+              </el-col>
+              <el-col :span="8">
+                <div class="login-container-imgw">
+                  <img :src="img" @click.native="changeImg" />
+                </div>
+              </el-col>
+            </el-form-item>
             <el-form-item>
-              <el-button @click="handleSubmit"> 登录 </el-button>
+              <el-button :loading="loading" @click="handleSubmit"> 登录 </el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -28,41 +41,46 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive } from "vue";
+import { defineComponent, ref, reactive, getCurrentInstance, nextTick } from "vue";
 import store, { STOREMUTSTIONTYPES } from "@/store";
 import router from "@/router";
-import axios from "@/api";
-import menuList from "@/router/menu";
+
+import { LOGINTYPES } from "@/type/login";
 export default defineComponent({
   name: "login",
   components: {},
   setup() {
-    const title = ref("title");
-    const form = reactive({
+    let img = ref("");
+    let loading = ref(false);
+    const { proxy }: any = getCurrentInstance();
+    let form: LOGINTYPES = reactive({
       loginName: "sxwl01",
       password: "1qaz2wsx3edc",
       merchantCode: "sxwl",
-      checkCode: "asdf",
+      checkCode: "aszz",
     });
-    function handleSubmit() {
-      axios.Login.login(form)
-        .then(async (res: any) => {
-          login();
-        })
-        .catch((res: any) => {
-          login();
-        });
-    }
-    const login = async () => {
-      await store.dispatch("user/" + STOREMUTSTIONTYPES.USER.SETTOKEN, "login");
-      store.commit("permission/" + STOREMUTSTIONTYPES.PERMISSION.SETROUTERS, menuList);
-      router.push("/");
+
+    const handleSubmit = async () => {
+      loading.value = true;
+      try {
+        await store.dispatch("permission/" + STOREMUTSTIONTYPES.PERMISSION.LOGIN, form);
+      } catch (error) {}
+      loading.value = false;
     };
-    return { title, form, handleSubmit };
+    const changeImg = () => {
+      const date = new Date();
+      const baseUrl = process.env.VUE_APP_BASE_URL;
+      img.value = `${baseUrl}/api/zhihuijingqu/login/checkcode?date${date}`;
+    };
+    changeImg();
+    return { form, handleSubmit, changeImg, img, loading };
   },
 });
 </script>
 <style lang="scss" scoped>
+/deep/ .el-form-item__label {
+  color: #fff;
+}
 .login-container {
   width: 100%;
   height: 100vh;
@@ -95,6 +113,14 @@ export default defineComponent({
     height: 40px;
     color: rgba(255, 255, 255, 0.856);
     text-align: center;
+  }
+  &-imgw {
+    height: 40px;
+    display: flex;
+    margin-left: 10px;
+    img {
+      cursor: pointer;
+    }
   }
   .ant-col {
     width: 100%;

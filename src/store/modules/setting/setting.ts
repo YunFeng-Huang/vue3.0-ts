@@ -2,22 +2,22 @@
 
 // @ts-ignore: Unreachable code error
 import { createStore } from 'vuex'
-import { MUTATIONTYPES, settingStateType } from './setting_d';
+import { MUTATIONTYPES, SETTINGSTATETYPE } from './setting_d';
 
 
-const state: settingStateType = {
+const state: SETTINGSTATETYPE = {
     collapse: true,
 }
 
 const mutations = {
-    [MUTATIONTYPES.TOGGLECOLLAPSE](state: settingStateType, collapse: boolean) {
+    [MUTATIONTYPES.TOGGLECOLLAPSE](state: SETTINGSTATETYPE, collapse: boolean) {
         state.collapse = collapse
     },
 }
 
 const actions = {};
 const getters = {
-    collapse: (state: settingStateType) => state.collapse,
+    collapse: (state: SETTINGSTATETYPE) => state.collapse,
 }
 
 export default { state, getters, mutations, actions, namespaced: true };
