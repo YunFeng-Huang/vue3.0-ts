@@ -47,7 +47,7 @@ module.exports = {
     proxy: {
       // 配置跨域
       '/v1/': {
-        target: 'https://dev-gateway.iuctrip.com/zhihuijingqu-service/',
+        target: 'https://devol-gateway.iuctrip.com/zhihuijingqu-service/',
         // ws:true,
         changOrigin: true,
         pathRewrite: {

@@ -4,15 +4,11 @@
     <div class="header-right">
       <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
-          下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+          用户名，欢迎回来<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item command="a">黄金糕</el-dropdown-item>
-            <el-dropdown-item command="b">狮子头</el-dropdown-item>
-            <el-dropdown-item command="c">螺蛳粉</el-dropdown-item>
-            <el-dropdown-item command="d" disabled>双皮奶</el-dropdown-item>
-            <el-dropdown-item command="e" divided>蚵仔煎</el-dropdown-item>
+            <el-dropdown-item command="a">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
