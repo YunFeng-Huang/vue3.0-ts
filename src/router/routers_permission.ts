@@ -58,6 +58,5 @@ router.afterEach((to: RouteLocationNormalized) => {
     //持久化store
     setSessionStorage("store", JSON.stringify(store.state));
     document.title = to.meta.title.toString();
-    console.log(to, 'aa')
     NProgress.done();
 });
