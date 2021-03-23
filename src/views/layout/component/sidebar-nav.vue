@@ -1,6 +1,6 @@
 <template>
   <el-menu
-    :collapse="isSidebarNavCollapse"
+    :collapse="collapse"
     background-color="#304156"
     text-color="#eee"
     active-text-color="#4dbcff"
@@ -14,7 +14,7 @@ import DynamicMenu from "./dynamic-menu.vue";
 import { defineComponent } from "vue";
 export default defineComponent({
   props: {
-    isSidebarNavCollapse: Boolean,
+    collapse: Boolean,
     menuList: Array,
   },
   components: {

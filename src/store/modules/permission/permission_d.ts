@@ -2,7 +2,7 @@ import { RouteRecordRaw } from "vue-router";
 
 export interface SETTINGSTATETYPE {
   menuList?: RouteRecordRaw[];
-  isSidebarNavCollapse?: Boolean;
+  crumbList?: string[]
   token: String,
 }
 export enum MUTATIONTYPES {

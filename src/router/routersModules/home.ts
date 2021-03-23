@@ -12,7 +12,6 @@ const HomeRouter: Array<RouteRecordRaw> = [
     path: "home",
     name: "home",
     component: home,
-    redirect: '/home/home2',
     children: [
       {
         path: "home2",

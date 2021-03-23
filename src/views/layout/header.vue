@@ -25,7 +25,6 @@ import { computed, defineComponent, getCurrentInstance } from "vue";
 export default defineComponent({
   setup(props, ctx) {
     const { proxy }: any = getCurrentInstance();
-    console.log(proxy, "proxy");
     const loginOut = async (val: string) => {
       await store.dispatch("permission/" + STOREMUTATIONTYPES.PERMISSION.LOGOUT);
     };

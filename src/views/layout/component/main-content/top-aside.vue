@@ -1,29 +1,53 @@
 <template>
-  asdfsdf
-  <!-- <aside class="aside__top">
-    <span
+  <aside class="aside__top">
+    <!-- <span
       class="icon iconfont iconshousuocaidan toggleNavCollapse"
-      :class="{ active: isSidebarNavCollapse }"
+      :class="{ active: collapse }"
       @click="toggleNavCollapse"
     >
-    </span>
+    </span> -->
+    <div style="width: 30px; display: inline-block; height: 1px"></div>
     <el-breadcrumb separator="/">
       <transition-group name="breadcrumb">
         <el-breadcrumb-item
-          v-for="(route, i) in crumbList"
-          :key="route.link"
-          :to="{ name: route.link }"
-          v-if="route.name != '首页'"
-          :class="{ 'is-last-link': i == crumbList.length - 1 }"
+          v-for="(name, i) in breadcrumb"
+          :key="name"
+          :class="{ 'is-last-link': i == breadcrumb.length - 1 }"
         >
-          {{ _title(route.name) }}
+          {{ name }}
         </el-breadcrumb-item>
       </transition-group>
     </el-breadcrumb>
-  </aside> -->
+  </aside>
 </template>
 
-<script lang="ts"></script>
+<script lang="ts">
+import { computed, defineComponent, getCurrentInstance } from "vue";
+import store, { STOREMUTATIONTYPES } from "@/store";
+// import { getMenuLevel } from "@/utils/routers";
+export default defineComponent({
+  setup() {
+    const { proxy } = getCurrentInstance();
+    let breadcrumb = proxy.$router.currentRoute.value.meta.breadcrumb
+      .toString()
+      .split(/\//)
+      .slice(1);
+    console.log(breadcrumb);
+    const collapse = computed(() => store.getters["setting/collapse"]);
+    const toggleNavCollapse = () => {
+      // store.commit(
+      //   "setting/" + STOREMUTATIONTYPES.SETTING.TOGGLECOLLAPSE,
+      //   !collapse.value
+      // );
+    };
+    return {
+      collapse,
+      breadcrumb,
+      toggleNavCollapse,
+    };
+  },
+});
+</script>
 
 <style lang="scss" scoped>
 .aside__top {

@@ -54,7 +54,6 @@ export default defineComponent({
   components: {},
   setup() {
     const { proxy }: any = getCurrentInstance();
-    console.log(proxy, "proxyproxy");
     let password = reactive({
       password: false,
       passwordForm: {

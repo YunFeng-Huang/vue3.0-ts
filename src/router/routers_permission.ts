@@ -54,9 +54,10 @@ router.beforeEach(
 router.afterEach((to: RouteLocationNormalized) => {
     const menuList: RouteRecordRaw[] = store.getters["permission/menuList"];
     // 获取菜单中的页面权限，并添加到路由meta中
-    mergeRoutersMeta(menuList, to);
+    mergeRoutersMeta(menuList, to, "");
     //持久化store
     setSessionStorage("store", JSON.stringify(store.state));
     document.title = to.meta.title.toString();
+    console.log(to, 'aa')
     NProgress.done();
 });

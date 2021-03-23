@@ -6,8 +6,8 @@ import axios from "@/api";
 import menuList from "@/router/menu";
 const state: SETTINGSTATETYPE = {
   menuList: [], //菜单权限
-  // isSidebarNavCollapse: false, 
   token: null, // login  登录 退出设置 null
+  crumbList: [], //面包屑导航
 };
 
 const mutations = {
