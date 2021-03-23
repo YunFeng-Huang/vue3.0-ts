@@ -1,14 +1,14 @@
 import Vue from "vue";
 import Vuex, { createLogger, Store } from "vuex";
 import permission from "./modules/permission/permission";
-import { MUTATIONTYPES as permissionType } from "./modules/permission/permission_d";
+import { MUTATIONTYPES as PERMISSIONTYPE } from "./modules/permission/permission_d";
 import setting from "./modules/setting/setting";
-import { MUTATIONTYPES as settingType } from "./modules/setting/setting_d";
+import { MUTATIONTYPES as SETTINGTYPE } from "./modules/setting/setting_d";
 
-
-export const STOREMUTSTIONTYPES = {
-  PERMISSION: permissionType,
-  SETTING: settingType,
+// 模块mutations 集合
+export const STOREMUTATIONTYPES = {
+  PERMISSION: PERMISSIONTYPE,
+  SETTING: SETTINGTYPE,
 };
 
 const debug = process.env.NODE_ENV !== "production";

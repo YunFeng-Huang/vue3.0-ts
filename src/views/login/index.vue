@@ -42,7 +42,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, reactive, getCurrentInstance, nextTick } from "vue";
-import store, { STOREMUTSTIONTYPES } from "@/store";
+import store, { STOREMUTATIONTYPES } from "@/store";
 import router from "@/router";
 
 import { LOGINTYPES } from "@/type/login";
@@ -63,7 +63,7 @@ export default defineComponent({
     const handleSubmit = async () => {
       loading.value = true;
       try {
-        await store.dispatch("permission/" + STOREMUTSTIONTYPES.PERMISSION.LOGIN, form);
+        await store.dispatch("permission/" + STOREMUTATIONTYPES.PERMISSION.LOGIN, form);
       } catch (error) {}
       loading.value = false;
     };

@@ -20,14 +20,14 @@
 
 <script lang="ts">
 import VReset from "./dialog/reset.vue";
-import store, { STOREMUTSTIONTYPES } from "@/store";
+import store, { STOREMUTATIONTYPES } from "@/store";
 import { computed, defineComponent, getCurrentInstance } from "vue";
 export default defineComponent({
   setup(props, ctx) {
     const { proxy }: any = getCurrentInstance();
     console.log(proxy, "proxy");
     const loginOut = async (val: string) => {
-      await store.dispatch("permission/" + STOREMUTSTIONTYPES.PERMISSION.LOGOUT);
+      await store.dispatch("permission/" + STOREMUTATIONTYPES.PERMISSION.LOGOUT);
     };
     const resetPass = async (val: string) => {
       // proxy.$refs.reset.password = true;

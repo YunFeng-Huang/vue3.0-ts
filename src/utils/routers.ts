@@ -1,5 +1,6 @@
 import { RouteLocationNormalized } from "vue-router";
 
+//提取路由权限
 export function getRouterName(menu: any[], AllName: string[]) {
     return menu.map((v, i) => {
         if (v.children) {
@@ -10,7 +11,7 @@ export function getRouterName(menu: any[], AllName: string[]) {
     });
 }
 
-
+//合并路由参数
 export function mergeRoutersMeta(menuList: any[], to: RouteLocationNormalized) {
     menuList.map((v) => {
         if (v.children) {

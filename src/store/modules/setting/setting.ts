@@ -6,7 +6,7 @@ import { MUTATIONTYPES, SETTINGSTATETYPE } from './setting_d';
 
 
 const state: SETTINGSTATETYPE = {
-    collapse: true,
+    collapse: true, //菜单是否展开
 }
 
 const mutations = {

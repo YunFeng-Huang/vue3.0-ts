@@ -1,5 +1,5 @@
 import router from "@/router";
-import store, { STOREMUTSTIONTYPES } from "@/store";
+import store, { STOREMUTATIONTYPES } from "@/store";
 import { NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw } from "vue-router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -17,21 +17,22 @@ router.beforeEach(
     ) => {
         NProgress.start();
         let hasToken = store.getters["permission/token"];
-        console.log(hasToken, 'hasToken');
-
+        // console.log(hasToken, 'hasToken');
+        // 判断是否已经登录
         if (hasToken) {
             if (to.path === "/login") {
                 next({ path: "/" });
                 NProgress.done();
             } else {
                 const menuList = store.getters["permission/menuList"];
-                console.log(menuList, 'hasToken');
+                // console.log(menuList, 'hasToken');
+                // 判断是否已经添加权限
                 if (menuList.length > 0 && router.getRoutes().length > 5) {
                     next();
                 } else {
                     try {
                         await store.dispatch(
-                            "permission/" + STOREMUTSTIONTYPES.PERMISSION.SETROUTERS
+                            "permission/" + STOREMUTATIONTYPES.PERMISSION.SETROUTERS
                         );
                         next({ ...to, replace: true });
                     } catch {
@@ -52,9 +53,10 @@ router.beforeEach(
 );
 router.afterEach((to: RouteLocationNormalized) => {
     const menuList: RouteRecordRaw[] = store.getters["permission/menuList"];
+    // 获取菜单中的页面权限，并添加到路由meta中
     mergeRoutersMeta(menuList, to);
+    //持久化store
     setSessionStorage("store", JSON.stringify(store.state));
-    // console.log(to);
-    // document.title = (to.meta.title) as string;
+    document.title = to.meta.title.toString();
     NProgress.done();
 });

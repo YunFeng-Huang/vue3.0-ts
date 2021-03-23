@@ -6,7 +6,7 @@ import axios from "@/api";
 import menuList from "@/router/menu";
 const state: SETTINGSTATETYPE = {
   menuList: [], //菜单权限
-  isSidebarNavCollapse: false,
+  // isSidebarNavCollapse: false, 
   token: null, // login  登录 退出设置 null
 };
 
