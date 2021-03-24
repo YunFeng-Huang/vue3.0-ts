@@ -1,32 +1,31 @@
 <template>
   <el-submenu
     v-for="(item, index) in menuList"
-    :index="deep + Math.random().toString()"
+    :index="item.deep"
     :class="item.children == null || item.children.length == 0 ? 'no-children' : ''"
   >
     <template #title><v-title :item="item"></v-title></template>
-    <el-menu-item-group>
-      <my-nav :menuList="item.children" :deep="deep + 1"></my-nav>
-    </el-menu-item-group>
+    <my-nav
+      v-if="item.children && item.children.length > 0"
+      :menuList="item.children"
+    ></my-nav>
   </el-submenu>
 </template>
 
 <script lang="ts">
 import vTitle from "./dynamic-menu-title.vue";
-import { RouteRecordRaw } from "vue-router";
 import { computed, defineComponent } from "vue";
 export default defineComponent({
   name: "my-nav",
   props: {
     menuList: Array,
-    deep: Number,
   },
   components: {
     vTitle,
   },
 
   setup(props) {
-    const menuList = props.menuList as RouteRecordRaw[];
+    const menuList = props.menuList as any;
     return {
       menuList,
     };

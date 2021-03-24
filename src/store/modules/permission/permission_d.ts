@@ -1,15 +1,22 @@
 import { RouteRecordRaw } from "vue-router";
 
 export interface SETTINGSTATETYPE {
-  menuList?: RouteRecordRaw[];
+  menuList?: any[];
   crumbList?: string[]
-  token: String,
-  permissionList: string[]
+  token: string,
+  deepActive: string,
+  permissionList: string[],
+  localRouterName: string[]
 }
 export enum MUTATIONTYPES {
   SETROUTERS = "SETROUTERS",
   SETCRUBLIST = "SETCRUBLIST",
   LOGIN = 'LOGIN',
   LOGOUT = "LOGOUT",
-  GETPERMISSTIONLIST = "GETPERMISSTIONLIST"
+  GETPERMISSTIONLIST = "GETPERMISSTIONLIST",
+  SETVALUE = "SETVALUE"
+}
+export interface PARAMS {
+  key: string,
+  value: any
 }

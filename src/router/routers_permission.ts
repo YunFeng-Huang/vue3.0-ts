@@ -1,4 +1,4 @@
-import router from "@/router";
+import router, { asyncRoutes } from "@/router";
 import store, { STOREMUTATIONTYPES } from "@/store";
 import { NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw } from "vue-router";
 import NProgress from "nprogress";
@@ -8,7 +8,6 @@ import { mergeRoutersMeta } from "@/utils/routers";
 NProgress.configure({ showSpinner: false });
 //不经过token校验的路由
 const routesWhiteList = ["/login", "/404", "/403"];
-
 router.beforeEach(
     async (
         to: RouteLocationNormalized,
@@ -16,31 +15,47 @@ router.beforeEach(
         next: NavigationGuardNext
     ) => {
         console.log(to);
+        const hasToken = store.getters["permission/token"];
+        const menuList = store.getters["permission/menuList"];
+        const permissionList = store.getters["permission/permissionList"];
+        const firstRoute = permissionList[0];
+        console.log(router.getRoutes(), 'getRoutes');
         NProgress.start();
-        let hasToken = store.getters["permission/token"];
+
         // console.log(hasToken, 'hasToken');
+        // console.log(permissionList, 'permissionList');
+        // console.log(firstRoute, 'firstRoute');
         // 判断是否已经登录
         if (hasToken) {
-            if (to.path === "/login") {
-                next({ path: "/" });
-                NProgress.done();
+            if (to.path === "/login" || to.path === "/") {
+                next({ name: firstRoute });
             } else {
-                const menuList = store.getters["permission/menuList"];
-                // console.log(menuList, 'hasToken');
+                // console.log(menuList.length > 0, router.getRoutes().length > 3, "menuList.length > 0 && router.getRoutes().length > 5")
                 // 判断是否已经添加权限
-                if (menuList.length > 0 && router.getRoutes().length > 5) {
-                    next();
+                if (menuList.length > 0 && router.getRoutes().length > 3) {
+                    if (to.name != "404" && to.name != "403") {
+                        const localRouterName = store.getters["permission/localRouterName"];
+                        if (!localRouterName.includes(to.name)) {
+                            next({ name: "404" });
+                        } if (!permissionList.includes(to.name)) {
+                            next({ name: "403" });
+                        } else {
+                            next();
+                        }
+                    } else {
+                        next();
+                    }
+
                 } else {
                     try {
                         await store.dispatch(
                             "permission/" + STOREMUTATIONTYPES.PERMISSION.SETROUTERS
                         );
-                        console.log(router.getRoutes(), 'getRoutes');
                         next({ ...to, replace: true });
                     } catch {
-                        next({ path: "/login", replace: true });
+                        next();
                     }
-                    NProgress.done();
+
                 }
             }
         } else {
@@ -48,9 +63,9 @@ router.beforeEach(
                 next();
             } else {
                 next({ path: "/login", replace: true });
-                NProgress.done();
             }
         }
+        NProgress.done();
     }
 );
 router.afterEach((to: RouteLocationNormalized) => {

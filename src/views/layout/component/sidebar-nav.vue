@@ -26,6 +26,7 @@ export default defineComponent({
       a.value++;
       return store.getters["permission/menuList"];
     });
+    console.log(menuList.value, "menuList");
     return { menuList, a };
   },
 });

@@ -15,7 +15,6 @@ const HomeRouter: Array<RouteRecordRaw> = [
     children: [
       {
         path: "home2",
-        name: "home2",
         component: home2,
         meta: {
           title: "home2",
@@ -23,7 +22,6 @@ const HomeRouter: Array<RouteRecordRaw> = [
         children: [
           {
             path: "home5",
-            name: "home5",
             component: home5,
             meta: {
               title: "home5",
@@ -34,7 +32,6 @@ const HomeRouter: Array<RouteRecordRaw> = [
       },
       {
         path: "home4",
-        name: "home4",
         component: home4,
         meta: {
           title: "home4",
@@ -49,7 +46,6 @@ const HomeRouter: Array<RouteRecordRaw> = [
       title: "home1",
     },
   },
-
   {
     path: "home3",
     name: "home3",

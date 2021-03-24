@@ -99,7 +99,7 @@ export default defineComponent({
   background: #212844;
   color: #fff;
   position: relative;
-  z-index: 100000;
+  z-index: 100;
   height: 50px;
   p {
     font-size: 16px;

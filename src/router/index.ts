@@ -7,13 +7,13 @@ const empty = () => import("@/views/layout/component/main-content/content.vue");
 const layout = () => import("@/views/layout/index.vue");
 
 
-// 路由表前端维护，新增页面之后请在 menu.ts 添加对应的 title ，path（即为name），menu.ts 是给后端返回的tree
+// 路由表前端维护，新增页面之后请在 menu.ts 添加对应的 title ，path（即为一级菜单的name），menu.ts 是给后端返回的tree
 // 本文件不添加路由，新增路由去routerModules内添加
 
 
 export const constantRoutes: Array<RouteRecordRaw> = [
   {
-    path: "/home",
+    path: "/index",
     name: "container",
     component: layout,
     meta: {
@@ -46,11 +46,11 @@ export const constantRoutes: Array<RouteRecordRaw> = [
     name: "login",
     component: login,
   },
-  {
-    path: "/:catchAll(.*)*",
-    redirect: "/home/404",
-    component: empty,
-  },
+  // {
+  //   path: '/:pathMatch(.*)',
+  //   redirect: "/home/404",
+  //   component: empty,
+  // },
 ];
 
 const asyncFiles = require.context("./routersModules", true, /\.ts$/);
@@ -61,7 +61,7 @@ asyncFiles.keys().forEach((key) => {
 });
 export const asyncRoutes: Array<RouteRecordRaw> = [...permissionModules];
 const router = createRouter({
-  history: createWebHashHistory(process.env.BASE_URL),
+  history: createWebHashHistory(),
   routes: constantRoutes,
 });
 
