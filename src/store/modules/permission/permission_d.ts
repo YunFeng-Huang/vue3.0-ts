@@ -4,10 +4,12 @@ export interface SETTINGSTATETYPE {
   menuList?: RouteRecordRaw[];
   crumbList?: string[]
   token: String,
+  permissionList: string[]
 }
 export enum MUTATIONTYPES {
   SETROUTERS = "SETROUTERS",
   SETCRUBLIST = "SETCRUBLIST",
   LOGIN = 'LOGIN',
-  LOGOUT = "LOGOUT"
+  LOGOUT = "LOGOUT",
+  GETPERMISSTIONLIST = "GETPERMISSTIONLIST"
 }

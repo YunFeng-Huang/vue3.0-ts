@@ -21,8 +21,10 @@ export default {
 .main-content {
   position: fixed;
   left: 200px;
+  right: 0;
   top: 100px;
-  width: 100%;
-  height: 100%;
+  bottom: 0;
+  overflow: auto;
+  padding: 20px;
 }
 </style>

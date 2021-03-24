@@ -4,28 +4,37 @@ import { getRouterName } from "@/utils/routers";
 import { SETTINGSTATETYPE, MUTATIONTYPES } from "./permission_d";
 import axios from "@/api";
 import menuList from "@/router/menu";
+const empty = () => import("@/views/layout/component/main-content/content.vue");
 // @ts-ignore: Unreachable code error
 import { ElMessage } from "ElementPlus";
+import { setSessionStorage } from "@/utils/storage";
+
 const state: SETTINGSTATETYPE = {
-  menuList: [], //菜单权限
+  menuList: [], //菜单权限 展示菜单 数据后端返回
   token: null, // login  登录 退出设置 null
-  crumbList: [], //面包屑
+  crumbList: [], //面包屑 根据菜单显示
+  permissionList: [] //权限数组 ，目前只用于重定向
 };
 
 const mutations = {
   [MUTATIONTYPES.SETROUTERS](state: SETTINGSTATETYPE, menuList: RouteRecordRaw[]) {
+    let permissionList: string[] = [];
+    getRouterName(menuList, permissionList);
+    permissionList = [...new Set(permissionList)];
     state.menuList = menuList;
+    state.permissionList = permissionList;
+    // 持久化store
+    setSessionStorage("store", JSON.stringify(state));
   },
   [MUTATIONTYPES.SETCRUBLIST](state: SETTINGSTATETYPE, breadcrumb: string) {
     const crumbList = breadcrumb.toString().split(/\//).slice(1);
-    console.log(crumbList, 'crumbList')
     state.crumbList = crumbList;
   },
   [MUTATIONTYPES.LOGIN](state: SETTINGSTATETYPE, token: string) {
     state.token = "login";
-    const firstRoute = router.getRoutes()[0];
+    const firstRoute = state.permissionList[0];
     router.replace({
-      name: firstRoute.name,
+      name: firstRoute,
     });
   },
   [MUTATIONTYPES.LOGOUT](state: SETTINGSTATETYPE) {
@@ -40,18 +49,13 @@ const mutations = {
 };
 
 const actions = {
-  async [MUTATIONTYPES.SETROUTERS]({ commit, state }: any) {
-    let menu = JSON.parse(JSON.stringify(state.menuList));
-    let AllName: string[] = [];
-    getRouterName(menu, AllName);
-    asyncRoutes.map((item) => {
-      if ([...new Set(AllName)].includes(item.name as RouteRecordRaw)) {
+  async [MUTATIONTYPES.SETROUTERS]({ commit, state, dispatch }: any) {
+    asyncRoutes.forEach((item) => {
+      if (state.permissionList.includes(item.name as RouteRecordRaw)) {
         router.addRoute("container", item);
-        return item;
       }
     });
-    commit(MUTATIONTYPES.SETROUTERS, menu);
-    return asyncRoutes;
+    commit(MUTATIONTYPES.SETROUTERS, state.menuList);
   },
   async [MUTATIONTYPES.LOGIN]({ commit, dispatch }: any, params) {
     var data = await axios.Login.login(params);

@@ -1,6 +1,6 @@
 <template>
   <div class="collapse-title" @click.native="gotoRoute(item)">
-    <!-- <i class="el-icon-message"></i> -->
+    <i class="el-icon-message"></i>
     <span class="title-name">{{ item.title }}</span>
   </div>
 </template>

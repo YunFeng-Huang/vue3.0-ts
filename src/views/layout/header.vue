@@ -34,7 +34,7 @@
       </el-dropdown>
     </div>
   </header>
-  <v-reset ref="reset"></v-reset>
+  <!-- <v-reset ref="reset"></v-reset> -->
 </template>
 
 <script lang="ts">

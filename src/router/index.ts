@@ -7,26 +7,13 @@ const empty = () => import("@/views/layout/component/main-content/content.vue");
 const layout = () => import("@/views/layout/index.vue");
 
 
-
-// export interface RouterType {
-//   path?: string;
-//   name?: string;
-//   component?: () => void;
-//   redirect?: string;
-//   meta?: any;
-//   children?: chilren[];
-// }
-// interface chilren {
-//   path?: string;
-//   meta?: any;
-//   name?: string,
-//   component: () => void,
-// }
+// 路由表前端维护，新增页面之后请在 menu.ts 添加对应的 title ，path（即为name），menu.ts 是给后端返回的tree
+// 本文件不添加路由，新增路由去routerModules内添加
 
 
 export const constantRoutes: Array<RouteRecordRaw> = [
   {
-    path: "/",
+    path: "/home",
     name: "container",
     component: layout,
     meta: {
@@ -60,8 +47,8 @@ export const constantRoutes: Array<RouteRecordRaw> = [
     component: login,
   },
   {
-    path: "/*",
-    redirect: "/404",
+    path: "/:catchAll(.*)*",
+    redirect: "/home/404",
     component: empty,
   },
 ];

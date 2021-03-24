@@ -28,13 +28,12 @@ import store, { STOREMUTATIONTYPES } from "@/store";
 export default defineComponent({
   setup() {
     const breadcrumb = computed(() => store.getters["permission/crumbList"]);
-    console.log(breadcrumb.value, "breadcrumbbreadcrumb");
     const collapse = computed(() => store.getters["setting/collapse"]);
     const toggleNavCollapse = () => {
-      // store.commit(
-      //   "setting/" + STOREMUTATIONTYPES.SETTING.TOGGLECOLLAPSE,
-      //   !collapse.value
-      // );
+      store.commit(
+        "setting/" + STOREMUTATIONTYPES.SETTING.TOGGLECOLLAPSE,
+        !collapse.value
+      );
     };
     return {
       collapse,

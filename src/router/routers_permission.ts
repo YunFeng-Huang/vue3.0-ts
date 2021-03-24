@@ -15,13 +15,8 @@ router.beforeEach(
         _from: RouteLocationNormalized,
         next: NavigationGuardNext
     ) => {
+        console.log(to);
         NProgress.start();
-        const menuList: RouteRecordRaw[] = store.getters["permission/menuList"];
-        // 获取菜单中的页面权限，并添加到路由meta中
-        mergeRoutersMeta(menuList, to, "");
-        to.meta && to.meta.title && (document.title = to.meta.title.toString());
-        to.meta && to.meta.breadcrumb && store.commit('permission/' + STOREMUTATIONTYPES.PERMISSION.SETCRUBLIST, to.meta.breadcrumb);
-
         let hasToken = store.getters["permission/token"];
         // console.log(hasToken, 'hasToken');
         // 判断是否已经登录
@@ -40,6 +35,7 @@ router.beforeEach(
                         await store.dispatch(
                             "permission/" + STOREMUTATIONTYPES.PERMISSION.SETROUTERS
                         );
+                        console.log(router.getRoutes(), 'getRoutes');
                         next({ ...to, replace: true });
                     } catch {
                         next({ path: "/login", replace: true });
@@ -58,9 +54,12 @@ router.beforeEach(
     }
 );
 router.afterEach((to: RouteLocationNormalized) => {
-
+    const menuList: RouteRecordRaw[] = store.getters["permission/menuList"];
+    // 获取菜单中的页面权限，并添加到路由meta中
+    mergeRoutersMeta(menuList, to, "");
+    to.meta && to.meta.title && (document.title = to.meta.title.toString());
+    to.meta && to.meta.breadcrumb && store.commit('permission/' + STOREMUTATIONTYPES.PERMISSION.SETCRUBLIST, to.meta.breadcrumb);
     //持久化store
     setSessionStorage("store", JSON.stringify(store.state));
-
     NProgress.done();
 });
