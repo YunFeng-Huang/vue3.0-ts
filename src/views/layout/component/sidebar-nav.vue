@@ -5,20 +5,29 @@
     text-color="#eee"
     active-text-color="#4dbcff"
   >
-    <DynamicMenu :deep="1" :menuList="menuList"></DynamicMenu>
+    <DynamicMenu :deep="1" :menuList="menuList" :key="a"></DynamicMenu
+    ><span style="color: #fff"></span>
   </el-menu>
 </template>
 
 <script lang="ts">
 import DynamicMenu from "./dynamic-menu.vue";
-import { defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
+import store from "@/store";
 export default defineComponent({
   props: {
     collapse: Boolean,
-    menuList: Array,
   },
   components: {
     DynamicMenu,
+  },
+  setup() {
+    let a = ref(0);
+    const menuList = computed(() => {
+      a.value++;
+      return store.getters["permission/menuList"];
+    });
+    return { menuList, a };
   },
 });
 </script>

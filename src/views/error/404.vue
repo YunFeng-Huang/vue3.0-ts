@@ -14,9 +14,9 @@
             <div class="bullshit-oops">{{ oops }}</div>
             <div class="bullshit-headline">{{ headline }}</div>
             <div class="bullshit-info">{{ info }}</div>
-            <el class="bullshit-return-home" href="#/index">
+            <!-- <el class="bullshit-return-home" href="#/index">
               {{ jumpTime }}s&nbsp;{{ btn }}
-            </el>
+            </el> -->
           </div>
         </el-col>
       </el-row>
@@ -168,7 +168,6 @@ export default {
         height: 36px;
         font-size: 14px;
         line-height: 36px;
-        color: #fff;
         text-align: center;
         cursor: pointer;
         // background: @vab-color-blue;

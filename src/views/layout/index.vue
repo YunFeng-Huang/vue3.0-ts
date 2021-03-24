@@ -2,7 +2,7 @@
   <v-header></v-header>
   <div class="container">
     <div :class="{ navCollapsed: collapse }">
-      <sidebarNav :menuList="menuList" :collapse="collapse" class="sidebar left-slide" />
+      <sidebarNav  :collapse="collapse" class="sidebar left-slide" />
       <mainContent />
     </div>
   </div>
@@ -17,10 +17,9 @@ import store from "@/store";
 export default defineComponent({
   setup() {
     const collapse = computed(() => store.getters["setting/collapse"]);
-    const menuList = computed(() => store.state["permission"].menuList);
+   
     return {
       collapse,
-      menuList,
     };
   },
   components: {

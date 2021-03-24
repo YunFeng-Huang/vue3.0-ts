@@ -41,9 +41,21 @@ export default [
         ]
     },
     {
-        title: '关联小程序',
-        path: 'home3',
+        title: '订单管理',
+        children: [
+            {
+                title: '订单操作',
+                path: 'order',
+            },
+        ]
     },
-
-
+    {
+        title: '订单管理2',
+        children: [
+            {
+                title: '订单操作2',
+                path: 'order1',
+            },
+        ]
+    },
 ]

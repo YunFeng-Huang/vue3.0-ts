@@ -80,7 +80,7 @@ service.interceptors.response.use(
         console.log(err, 'err');
         if (axios.isCancel(err)) {
             console.log('request cancel ', JSON.stringify(err))
-            return new Promise(() => { })
+            return Promise.reject(err);
         }
         // store.dispatch('general/STARTLOADING',false);
         if (err && err.response) {

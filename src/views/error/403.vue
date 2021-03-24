@@ -39,29 +39,6 @@ export default {
       timer: 0,
     };
   },
-  mounted() {
-    // this.timeChange()
-  },
-  beforeUnmount() {
-    clearInterval(this.timer);
-  },
-  methods: {
-    ...mapActions({
-      delVisitedRoute: "tagsBar/delVisitedRoute",
-      delOthersVisitedRoutes: "tagsBar/delOthersVisitedRoutes",
-    }),
-    timeChange() {
-      this.timer = setInterval(() => {
-        if (this.jumpTime) {
-          this.jumpTime--;
-        } else {
-          this.$router.push({ path: "/" });
-          this.delOthersVisitedRoutes({ path: "/" });
-          clearInterval(this.timer);
-        }
-      }, 1000);
-    },
-  },
 };
 </script>
 

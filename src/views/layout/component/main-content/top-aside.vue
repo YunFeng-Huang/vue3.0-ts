@@ -27,12 +27,8 @@ import store, { STOREMUTATIONTYPES } from "@/store";
 // import { getMenuLevel } from "@/utils/routers";
 export default defineComponent({
   setup() {
-    const { proxy } = getCurrentInstance();
-    let breadcrumb = proxy.$router.currentRoute.value.meta.breadcrumb
-      .toString()
-      .split(/\//)
-      .slice(1);
-    console.log(breadcrumb);
+    const breadcrumb = computed(() => store.getters["permission/crumbList"]);
+    console.log(breadcrumb.value, "breadcrumbbreadcrumb");
     const collapse = computed(() => store.getters["setting/collapse"]);
     const toggleNavCollapse = () => {
       // store.commit(
