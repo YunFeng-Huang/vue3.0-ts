@@ -1,6 +1,6 @@
 import router, { asyncRoutes } from "@/router";
 import store, { STOREMUTATIONTYPES } from "@/store";
-import { NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw } from "vue-router";
+import { NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw, START_LOCATION } from "vue-router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { setSessionStorage } from "@/utils/storage";
@@ -14,12 +14,10 @@ router.beforeEach(
         _from: RouteLocationNormalized,
         next: NavigationGuardNext
     ) => {
-        console.log(to);
         const hasToken = store.getters["permission/token"];
         const menuList = store.getters["permission/menuList"];
         const permissionList = store.getters["permission/permissionList"];
         const firstRoute = permissionList[0];
-        console.log(router.getRoutes(), 'getRoutes');
         NProgress.start();
 
         // console.log(hasToken, 'hasToken');
@@ -30,9 +28,9 @@ router.beforeEach(
             if (to.path === "/login" || to.path === "/") {
                 next({ name: firstRoute });
             } else {
-                // console.log(menuList.length > 0, router.getRoutes().length > 3, "menuList.length > 0 && router.getRoutes().length > 5")
+                let routesLength = router.options.routes[0].children.length > 2
                 // 判断是否已经添加权限
-                if (menuList.length > 0 && router.getRoutes().length > 3) {
+                if (menuList.length > 0 && routesLength) {
                     if (to.name != "404" && to.name != "403") {
                         const localRouterName = store.getters["permission/localRouterName"];
                         if (!localRouterName.includes(to.name)) {
@@ -45,7 +43,6 @@ router.beforeEach(
                     } else {
                         next();
                     }
-
                 } else {
                     try {
                         await store.dispatch(

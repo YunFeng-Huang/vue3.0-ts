@@ -59,8 +59,11 @@ const actions = {
     asyncRoutes.forEach((item) => {
       if (state.permissionList.includes(item.name)) {
         router.addRoute("container", item);
+        router.options.routes[0].children.push(item);
       }
     });
+    console.log(router, 'router');
+    // console.log(router.getRoutes(), 1111);
     commit(MUTATIONTYPES.SETROUTERS, state.menuList);
   },
   async [MUTATIONTYPES.LOGIN]({ commit, dispatch }: any, params) {

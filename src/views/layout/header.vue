@@ -1,6 +1,5 @@
 <template>
   <header class="header-app">
-    <!-- <div>这里是文案</div> -->
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
       <el-form-item label="系统选择">
         <el-select
@@ -15,8 +14,10 @@
       </el-form-item>
       <el-form-item label="商户选择">
         <el-select v-model="formInline.region" placeholder="商户选择" size="small">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
+          <el-option label="商户1" value="0"></el-option>
+          <el-option label="商户2" value="1"></el-option>
+          <el-option label="商户3" value="2"></el-option>
+          <el-option label="商户4" value="3"></el-option>
         </el-select>
       </el-form-item>
     </el-form>
@@ -46,8 +47,8 @@ export default defineComponent({
   setup(props, ctx) {
     const { proxy }: any = getCurrentInstance();
     let formInline = reactive({
-      user: "",
-      region: "",
+      user: "0",
+      region: "0",
     });
     const loginOut = async (val: string) => {
       await store.dispatch("permission/" + STOREMUTATIONTYPES.PERMISSION.LOGOUT);

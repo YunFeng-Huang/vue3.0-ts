@@ -22,7 +22,7 @@ export default [
                 title: '数据看板',
                 children: [{
                     title: '哈哈哈',
-                    path: 'home4',
+                    path: 'home1',
                 },]
             },
 

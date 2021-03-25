@@ -5,7 +5,7 @@
     text-color="#eee"
     active-text-color="#4dbcff"
   >
-    <DynamicMenu :deep="1" :menuList="menuList" :key="a"></DynamicMenu>
+    <DynamicMenu :menuList="menuList" :key="a"></DynamicMenu>
   </el-menu>
 </template>
 

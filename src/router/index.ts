@@ -48,7 +48,7 @@ export const constantRoutes: Array<RouteRecordRaw> = [
   },
   // {
   //   path: '/:pathMatch(.*)',
-  //   redirect: "/home/404",
+  //   redirect: "/index/404",
   //   component: empty,
   // },
 ];

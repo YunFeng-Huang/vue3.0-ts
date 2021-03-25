@@ -10,10 +10,10 @@ export function getRouterName(menu: any[], AllName: string[], deep?: string) {
     });
 }
 // //提取本地路由权限
-// export function getLocalRouterName(menu: any[], AllName: string[]) {
-//     return menu.map((v, i) => {
+// export function getLocalRouterPath(arr: any[], AllName: string[]) {
+//     return arr.map((v, i) => {
 //         if (v.children) {
-//             getLocalRouterName(v.children, AllName);
+//             getLocalRouterPath(v.children, AllName);
 //         } else {
 //             AllName.push(v.path);
 //         }
