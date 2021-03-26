@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <el-row>
+    <el-row class="login-container-row">
       <el-col :xs="0" :md="6" :sm="12" :lg="14" :xl="16"></el-col>
       <el-col :xs="24" :sm="16" :md="12" :lg="10" :xl="6">
         <div class="login-container-form">
@@ -86,11 +86,18 @@ export default defineComponent({
   height: 100vh;
   background: url("~@/assets/login_images/login_background.png");
   background-size: cover;
+  &-row {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
   &-form {
     width: calc(100% - 80px);
-    height: 380px;
-    padding: 4vh;
-    margin-top: calc((100vh - 380px) / 2);
+    // height: 380px;
+    padding: 2vh;
+    // margin-top: calc((100vh - 380px) / 2);
     margin-right: 20px;
     margin-left: 20px;
     background: url("~@/assets/login_images/login_form.png");

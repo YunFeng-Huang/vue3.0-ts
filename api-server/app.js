@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+const axios = require('./api/requset.js')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -15,20 +15,45 @@ app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.all('*', function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE,PATCH');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+  res.setHeader("Content-Type", "application/json;charset=utf-8");
+  next();
+});
+
+app.use('/', indexRouter).use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+app.use(async (req, res, next) => {
+  if (req.method == "GET") {
+    await axios.get(req.url, req.body)
+      .then(data => {
+        res.send(data)
+      })
+      .catch(err => {
+        res.send(err)
+      })
+  } else {
+    await axios.post(req.url, req.body).then(data => {
+        res.send(data)
+      })
+      .catch(err => {
+        res.send(err)
+      })
+  }
+  // next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

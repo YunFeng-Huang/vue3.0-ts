@@ -47,7 +47,7 @@ module.exports = {
     proxy: {
       // 配置跨域
       '/v1/': {
-        target: 'https://devol-gateway.iuctrip.com/zhihuijingqu-service/',
+        target: 'http://localhost:3000', // 本地代理域名去api-server api 下的config修改
         // ws:true,
         changOrigin: true,
         pathRewrite: {
@@ -66,7 +66,10 @@ module.exports = {
 
         /*sass-loader 9.0写法，感谢github用户 shaonialife*/
         additionalData(content, loaderContext) {
-          const { resourcePath, rootContext } = loaderContext
+          const {
+            resourcePath,
+            rootContext
+          } = loaderContext
           const relativePath = path.relative(rootContext, resourcePath)
           if (
             relativePath.replace(/\\/g, '/') !== 'src/styles/variables.scss'
@@ -81,32 +84,32 @@ module.exports = {
   configureWebpack() {
     return {
       devtool: 'source-map',
-       resolve: { extensions: [".ts", ".tsx", ".js", ".json"] },  
-       module: {        
-        rules: [    
-          {    
-            test: /\.tsx?$/,    
-            loader: 'ts-loader',    
-            exclude: /node_modules/,    
-            options: {
-              appendTsSuffixTo: [/\.vue$/],    
-            }    
-          }        
-        ]    
-      } , 
-        plugins: [
-          new WebpackBar(),
-        ],
-      }
-    },
- 
+      resolve: {
+        extensions: [".ts", ".tsx", ".js", ".json"]
+      },
+      module: {
+        rules: [{
+          test: /\.tsx?$/,
+          loader: 'ts-loader',
+          exclude: /node_modules/,
+          options: {
+            appendTsSuffixTo: [/\.vue$/],
+          }
+        }]
+      },
+      plugins: [
+        new WebpackBar(),
+      ],
+    }
+  },
+
   chainWebpack: config => {
-      // 前面的vue指的是使用时的名字，后面的Vue是加载的包名
-     config.set('externals', {
+    // 前面的vue指的是使用时的名字，后面的Vue是加载的包名
+    config.set('externals', {
       'vue': "Vue",
       'ElementPlus': 'ElementPlus',
-     })
-    
+    })
+
     config.plugins.delete('preload') // TODO: need test
     config.plugins.delete('prefetch') // TODO: need test
     // 别名 alias
@@ -120,25 +123,23 @@ module.exports = {
     config.output
       .filename(path.join('static', `js/[name].${Date.now()}.js`))
       .chunkFilename(path.join('static', `js/[name].${Date.now()}.js`))
-    
-  //  config.module
-  //     .test(/\.tsx?$/)
-  //     .end()
-  //     .use('ts-loader')
-  //     .loader('ts-loader')
-  //    .options({
-  //        appendTsSuffixTo: [/\.vue$/],  
-  //     })
-  //     .end()
+
+    //  config.module
+    //     .test(/\.tsx?$/)
+    //     .end()
+    //     .use('ts-loader')
+    //     .loader('ts-loader')
+    //    .options({
+    //        appendTsSuffixTo: [/\.vue$/],  
+    //     })
+    //     .end()
     /**
      * 打包分析
      */
     if (IS_PROD) {
-      config.plugin('webpack-report').use(BundleAnalyzerPlugin, [
-        {
-          analyzerMode: 'static'
-        }
-      ])
+      config.plugin('webpack-report').use(BundleAnalyzerPlugin, [{
+        analyzerMode: 'static'
+      }])
     }
     config
       // https://webpack.js.org/configuration/devtool/#development
@@ -148,12 +149,10 @@ module.exports = {
       config
         .plugin('ScriptExtHtmlWebpackPlugin')
         .after('html')
-        .use('script-ext-html-webpack-plugin', [
-          {
-            // 将 runtime 作为内联引入不单独存在
-            inline: /runtime\..*\.js$/
-          }
-        ])
+        .use('script-ext-html-webpack-plugin', [{
+          // 将 runtime 作为内联引入不单独存在
+          inline: /runtime\..*\.js$/
+        }])
         .end()
       config.optimization.splitChunks({
         chunks: 'all',

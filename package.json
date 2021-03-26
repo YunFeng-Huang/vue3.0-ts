@@ -6,7 +6,7 @@
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "mock": "cd api-server && node ./bin/www"
+    "mock": " node ./api-server/bin/www"
   },
   "dependencies": {
     "@types/core-js": "^2.5.4",

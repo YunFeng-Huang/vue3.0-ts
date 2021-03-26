@@ -1,0 +1,1 @@
+exports.baseURL = 'https://dev-gateway.iuctrip.com/zhihuijingqu-service';
