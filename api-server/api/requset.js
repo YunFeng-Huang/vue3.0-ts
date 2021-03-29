@@ -1,10 +1,9 @@
 const axios = require('axios');
-const {
-    baseURL
-} = require('./config')
-console.log(baseURL, "nodeBaseURL")
+
+var app = require('../app');
+global.baseUrl = 'https://dev-gateway.iuctrip.com/iuctrip-manage-service';
 const service = axios.create({
-    baseURL: baseURL,
+    baseURL: global.baseUrl,
     timeout: 1000 * 30,
     withCredentials: true,
     headers: {
@@ -28,6 +27,7 @@ service.interceptors.response.use(
         return res.data || res.datas || res;
     },
     (err) => {
+        console.log('======' + err + '======')
         return err;
     }
 );

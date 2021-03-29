@@ -5,14 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const axios = require('./api/requset.js')
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({
@@ -29,10 +26,11 @@ app.all('*', function (req, res, next) {
   next();
 });
 
-app.use('/', indexRouter).use('/users', usersRouter);
+app.use('/', indexRouter)
 
 // catch 404 and forward to error handler
 app.use(async (req, res, next) => {
+  console.log(req)
   if (req.method == "GET") {
     await axios.get(req.url, req.body)
       .then(data => {
