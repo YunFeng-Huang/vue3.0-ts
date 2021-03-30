@@ -27,7 +27,6 @@ service.interceptors.response.use(
         return res.data || res.datas || res;
     },
     (err) => {
-        console.log('======' + err + '======')
         return err;
     }
 );
