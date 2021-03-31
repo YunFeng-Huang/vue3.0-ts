@@ -69,8 +69,9 @@ export default defineComponent({
     };
     const changeImg = () => {
       const date = new Date();
-      const baseUrl = process.env.VUE_APP_BASE_URL;
-      img.value = `${baseUrl}/api/zhihuijingqu/login/checkcode`;
+      const baseUrl = process.env.VUE_APP_BASE_URL + process.env.VUE_APP_SERVICE;
+      img.value = `${baseUrl}/api/zhihuijingqu/login/checkcode?date=${date}`;
+      console.log(img.value, "img.value");
     };
     changeImg();
     return { form, handleSubmit, changeImg, img, loading };

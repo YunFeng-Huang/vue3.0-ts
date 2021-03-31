@@ -7,8 +7,7 @@ const {
 const fs = require('fs')
 const axios = require('../api/requset.js')
 
-// var request = require('request')
-router.post('/api/zhihuijingqu/user/login', async (req, res) => {
+router.post('/zhihuijingqu-service/api/zhihuijingqu/user/login', async (req, res) => {
     res.send(login)
 })
 

@@ -8,23 +8,6 @@ var indexRouter = require('./routes/index');
 var app = express();
 var proxy = require('http-proxy-middleware');
 
-
-app.use('/', proxy({
-  // 代理跨域目标接口
-  target: global.baseUrl,
-  changeOrigin: true,
-  secure: false,
-}));
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({
-  extended: false
-}));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.all('*', function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE,PATCH');
@@ -33,9 +16,21 @@ app.all('*', function (req, res, next) {
   next();
 });
 
+
 app.use('/', indexRouter)
 
+app.use('/', proxy({
+  // 代理跨域目标接口
+  target: global.baseUrl,
+  changeOrigin: true,
+  secure: false,
+}));
+
+
 // catch 404 and forward to error handler
+// app.use(function (req, res, next) {
+//   next(createError(404));
+// });
 
 // error handler
 app.use(function (err, req, res, next) {
@@ -47,5 +42,14 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: false
+}));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
 module.exports = app;

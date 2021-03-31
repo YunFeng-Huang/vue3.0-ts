@@ -3,7 +3,7 @@ import router, { asyncRoutes, constantRoutes, RouteRecordRaw } from "@/router";
 import { getRouterName } from "@/utils/routers";
 import { SETTINGSTATETYPE, MUTATIONTYPES, PARAMS } from "./permission_d";
 import axios from "@/api";
-import menuList from "@/router/menu";
+// import menuList from "@/router/menu";
 // const empty = () => import("@/views/layout/component/main-content/content.vue");
 // @ts-ignore: Unreachable code error
 import { ElMessage } from "ElementPlus";
@@ -62,14 +62,12 @@ const actions = {
         router.options.routes[0].children.push(item);
       }
     });
-    console.log(router, 'router');
-    // console.log(router.getRoutes(), 1111);
     commit(MUTATIONTYPES.SETROUTERS, state.menuList);
   },
   async [MUTATIONTYPES.LOGIN]({ commit, dispatch }: any, params) {
     var data = await axios.Login.login(params);
-    console.log(data, "data");
-    commit(MUTATIONTYPES.SETROUTERS, menuList);
+    console.log(data.permission, "data.permission");
+    commit(MUTATIONTYPES.SETROUTERS, data.permission);
     await dispatch(MUTATIONTYPES.SETROUTERS);
     commit(MUTATIONTYPES.LOGIN, "login");
   },

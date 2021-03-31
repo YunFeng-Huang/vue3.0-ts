@@ -1,7 +1,8 @@
 const axios = require('axios');
 
 var app = require('../app');
-global.baseUrl = 'https://dev-gateway.iuctrip.com/iuctrip-manage-service';
+global.baseUrl = 'https://dev-gateway.iuctrip.com';
+// global.baseUrl = 'https://dev-gateway.iuctrip.com/iuctrip-manage-service';
 const service = axios.create({
     baseURL: global.baseUrl,
     timeout: 1000 * 30,
