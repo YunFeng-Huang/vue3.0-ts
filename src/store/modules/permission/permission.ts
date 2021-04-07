@@ -8,6 +8,7 @@ import axios from "@/api";
 // @ts-ignore: Unreachable code error
 import { ElMessage } from "ElementPlus";
 import { setSessionStorage } from "@/utils/storage";
+import { AxiosResponse } from "axios";
 
 const state: SETTINGSTATETYPE = {
   menuList: [], //菜单权限 展示菜单 数据后端返回
@@ -22,7 +23,7 @@ const mutations = {
   [MUTATIONTYPES.SETVALUE](state: SETTINGSTATETYPE, params: PARAMS) {
     state[params.key] = params.value;
   },
-  [MUTATIONTYPES.SETROUTERS](state: SETTINGSTATETYPE, menuList: RouteRecordRaw[]) {
+  [MUTATIONTYPES.SETROUTERS](state: SETTINGSTATETYPE, menuList) {
     let permissionList: string[] = [];
     getRouterName(menuList, permissionList, "1");
     permissionList = [...new Set(permissionList)];
@@ -66,7 +67,6 @@ const actions = {
   },
   async [MUTATIONTYPES.LOGIN]({ commit, dispatch }: any, params) {
     var data = await axios.Login.login(params);
-    console.log(data.permission, "data.permission");
     commit(MUTATIONTYPES.SETROUTERS, data.permission);
     await dispatch(MUTATIONTYPES.SETROUTERS);
     commit(MUTATIONTYPES.LOGIN, "login");

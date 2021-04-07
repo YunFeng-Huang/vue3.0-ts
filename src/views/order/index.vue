@@ -1,5 +1,5 @@
 <template>
-  <el-form :inline="true" :model="formInline">
+  <el-form :inline="true" :model="formInline" class="top-search">
     <el-form-item label="订单号">
       <el-input v-model="formInline.user" placeholder="订单号"></el-input>
     </el-form-item>
@@ -14,26 +14,85 @@
       <el-button type="primary" @click="onSubmit">查询</el-button>
     </el-form-item>
   </el-form>
-  <p>对应支付系统返回值：该结果是进行转化后的展示，如要查看原始返回，请点击此处。</p>
-  <el-table :data="tableData" border style="width: 40%">
-    <el-table-column prop="date" label="参数名"> </el-table-column>
-    <el-table-column prop="name" label="返回值"> </el-table-column>
-  </el-table>
-  <p>支付系统的参数含义，请结合左表的返回值一起使用。</p>
-  <el-table :data="tableData" border style="width: 40%">
-    <el-table-column prop="date" label="参数名"> </el-table-column>
-    <el-table-column prop="name" label="参数含义"> </el-table-column>
-  </el-table>
+  <div class="top-search-main">
+    <p>对应支付系统返回值：该结果是进行转化后的展示，如要查看原始返回，请点击此处。</p>
+    <template v-if="aliOrderQueryResult.length > 0">
+      <el-table
+        :data="aliOrderQueryResult"
+        border
+        row-key="id"
+        default-expand-all
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+      >
+        <el-table-column prop="key" label="参数名"> </el-table-column>
+        <el-table-column prop="value" label="返回值"> </el-table-column>
+      </el-table>
+    </template>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from "vue";
+import { defineComponent, ref, reactive, getCurrentInstance, toRefs } from "vue";
 import store from "@/store";
 import router from "@/router";
+
+export interface tableEle {
+  id: string;
+  key: string;
+  value: any;
+  children?: tableEle[];
+}
 export default defineComponent({
   name: "",
   components: {},
   setup() {
+    const { proxy }: any = getCurrentInstance();
+    let orderData = reactive({
+      aliOrderQueryResult: [],
+    });
+    const postOrder = () => {
+      // systemType：0 智慧景区 1智慧收银
+      // orderNum：订单号
+      // orderNumTypeEnum：1支付宝单号 2微信单号 3业务单号
+      proxy.$api.Order.order({
+        systemType: 1,
+        orderNum: "2021030516031128766240611",
+        orderNumTypeEnum: 3,
+      }).then((v) => {
+        var aliOrderQueryResult = v.aliOrderQueryResult;
+        orderData.aliOrderQueryResult = [];
+        let o: tableEle;
+        for (const key in aliOrderQueryResult) {
+          if (Object.prototype.hasOwnProperty.call(aliOrderQueryResult, key)) {
+            const element = aliOrderQueryResult[key];
+            o = {
+              id: key,
+              key: key,
+              value: element,
+              children: [],
+            };
+            if (Array.isArray(element)) {
+              element.forEach((v) => {
+                for (const k in v) {
+                  if (Object.prototype.hasOwnProperty.call(v, k)) {
+                    const e = v[k];
+                    o.children.push({
+                      id: key + k,
+                      key: k,
+                      value: e,
+                    });
+                  }
+                }
+              });
+            } else {
+              delete o.children;
+            }
+          }
+          orderData.aliOrderQueryResult.push(o);
+        }
+        console.log(orderData.aliOrderQueryResult, "orderData.aliOrderQueryResult");
+      });
+    };
     const formInline = reactive({
       user: "",
       region: "",
@@ -60,8 +119,11 @@ export default defineComponent({
         address: "上海市普陀区金沙江路 1516 弄",
       },
     ]);
-    const onSubmit = () => {};
-    return { formInline, onSubmit, tableData };
+    const onSubmit = () => {
+      postOrder();
+    };
+    postOrder();
+    return { formInline, onSubmit, tableData, ...toRefs(orderData) };
   },
 });
 </script>

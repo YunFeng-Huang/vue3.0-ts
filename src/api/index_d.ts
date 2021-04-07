@@ -1,3 +1,4 @@
 export interface apiType {
-  Login?: any
+  Login?: any,
+  Order?: any
 }
