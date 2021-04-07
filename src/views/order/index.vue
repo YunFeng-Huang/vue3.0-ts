@@ -20,12 +20,14 @@
       <el-table
         :data="aliOrderQueryResult"
         border
-        row-key="id"
+        row-key="key"
+        row-class-name="item"
         default-expand-all
         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       >
-        <el-table-column prop="key" label="参数名"> </el-table-column>
-        <el-table-column prop="value" label="返回值"> </el-table-column>
+        <el-table-column type="index"></el-table-column>
+        <el-table-column prop="key" label="参数名"></el-table-column>
+        <el-table-column prop="value" label="返回值"></el-table-column>
       </el-table>
     </template>
   </div>
@@ -59,8 +61,8 @@ export default defineComponent({
         orderNum: "2021030516031128766240611",
         orderNumTypeEnum: 3,
       }).then((v) => {
-        var aliOrderQueryResult = v.aliOrderQueryResult;
-        orderData.aliOrderQueryResult = [];
+        let aliOrderQueryResult = v.aliOrderQueryResult;
+        let aliOrderQueryResultList = [];
         let o: tableEle;
         for (const key in aliOrderQueryResult) {
           if (Object.prototype.hasOwnProperty.call(aliOrderQueryResult, key)) {
@@ -88,42 +90,21 @@ export default defineComponent({
               delete o.children;
             }
           }
-          orderData.aliOrderQueryResult.push(o);
+          aliOrderQueryResultList.push(o);
         }
-        console.log(orderData.aliOrderQueryResult, "orderData.aliOrderQueryResult");
+        console.log(aliOrderQueryResultList, "aliOrderQueryResultList");
+        orderData.aliOrderQueryResult = aliOrderQueryResultList;
       });
     };
     const formInline = reactive({
       user: "",
       region: "",
     });
-    const tableData = ref([
-      {
-        date: "2016-05-02",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1518 弄",
-      },
-      {
-        date: "2016-05-04",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1517 弄",
-      },
-      {
-        date: "2016-05-01",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1519 弄",
-      },
-      {
-        date: "2016-05-03",
-        name: "王小虎",
-        address: "上海市普陀区金沙江路 1516 弄",
-      },
-    ]);
     const onSubmit = () => {
       postOrder();
     };
     postOrder();
-    return { formInline, onSubmit, tableData, ...toRefs(orderData) };
+    return { formInline, onSubmit, ...toRefs(orderData) };
   },
 });
 </script>
