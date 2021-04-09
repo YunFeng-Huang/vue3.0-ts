@@ -6,7 +6,8 @@ export interface SETTINGSTATETYPE {
   token: string,
   deepActive: string,
   permissionList: string[],
-  localRouterName: string[]
+  localRouterName: string[],
+  systemType: number
 }
 export enum MUTATIONTYPES {
   SETROUTERS = "SETROUTERS",

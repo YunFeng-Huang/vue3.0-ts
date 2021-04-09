@@ -16,7 +16,8 @@ const state: SETTINGSTATETYPE = {
   crumbList: [], //面包屑 根据菜单显示
   deepActive: "", //最后点击的菜单层级
   permissionList: [], //权限数组 ，目前只用于重定向,403
-  localRouterName: [] //本地路由表所有name // 手动404 解决刷新404问题
+  localRouterName: [], //本地路由表所有name // 手动404 解决刷新404问题
+  systemType: 0,//0 智慧景区 1智慧收银
 };
 
 const mutations = {

@@ -3,13 +3,13 @@
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
       <el-form-item label="系统选择">
         <el-select
-          v-model="formInline.user"
+          v-model="formInline.systemType"
           placeholder="系统选择"
           size="small"
           @change="change"
         >
-          <el-option label="智慧景区系统" value="0"></el-option>
-          <el-option label="智慧收银系统" value="1"></el-option>
+          <el-option label="智慧景区系统" :value="0"></el-option>
+          <el-option label="智慧收银系统" :value="1"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="商户选择">
@@ -58,7 +58,7 @@ export default defineComponent({
   setup(props, ctx) {
     const { proxy }: any = getCurrentInstance();
     let formInline = reactive({
-      user: "0",
+      systemType: 0,
       region: "0",
     });
     let merchants = ref([]);
@@ -69,12 +69,15 @@ export default defineComponent({
       // proxy.$refs.reset.password = true;
     };
     const change = async () => {
+      store.commit("permission/" + STOREMUTATIONTYPES.PERMISSION.SETVALUE, {
+        systemType: formInline.systemType,
+      });
       store.commit("permission/" + STOREMUTATIONTYPES.PERMISSION.SETROUTERS, menuList);
       store.dispatch("permission/" + STOREMUTATIONTYPES.PERMISSION.SETROUTERS);
       // proxy.$refs.reset.password = true;
     };
     onMounted(() => {
-      proxy.$api.Login.merchants().then(({ data }) => {
+      proxy.$api.Login.merchants({}).then(({ data }) => {
         merchants.value = data;
         nextTick(() => {
           formInline.region = data[0].id;

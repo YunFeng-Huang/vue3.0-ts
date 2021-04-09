@@ -8,6 +8,11 @@ var indexRouter = require('./routes/index');
 var app = express();
 var proxy = require('http-proxy-middleware');
 
+// var bodyParser = require('body-parser');
+app.use(require('body-parser').urlencoded({
+  extended: false
+}))
+app.use(require('body-parser').json())
 app.all('*', function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE,PATCH');
@@ -45,10 +50,16 @@ app.use(function (err, req, res, next) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({
-  extended: false
-}));
+// app.use(express.urlencoded({
+//   extended: true
+// }));
+
+// app.use(express.json());
+// app.use(bodyParser());
+// app.use(bodyParser.urlencoded({
+//   extended: true
+// }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
