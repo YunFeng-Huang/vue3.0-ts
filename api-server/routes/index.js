@@ -15,6 +15,7 @@ router.post('/zhihuijingqu-service/api/zhihuijingqu/user/login', async (req, res
     res.send(login)
 })
 router.post('/zhihuijingqu-service/api/zhihuijingqu/user/order', async (req, res) => {
+    console.log(req.body, 'req');
     res.send(order)
 })
 router.post('/zhihuijingqu-service/api/zhihuijingqu/user/merchants', async (req, res) => {

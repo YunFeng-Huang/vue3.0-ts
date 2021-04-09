@@ -67,6 +67,7 @@ const actions = {
   },
   async [MUTATIONTYPES.LOGIN]({ commit, dispatch }: any, params) {
     var data = await axios.Login.login(params);
+    commit(MUTATIONTYPES.SETROUTERS, data.permission);
     await dispatch(MUTATIONTYPES.SETROUTERS);
     commit(MUTATIONTYPES.LOGIN, "login");
   },
