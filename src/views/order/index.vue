@@ -68,11 +68,12 @@ export default defineComponent({
       (proxy.$refs.dialog as dialog).dialogVisible = true;
     };
     const postOrder = () => {
+      const systemType = store.getters["permission/systemType"];
       // systemType：0 智慧景区 1智慧收银
       // orderNum：订单号
       // orderNumTypeEnum：1支付宝单号 2微信单号 3业务单号
       proxy.$api.Order.order({
-        systemType: 1,
+        systemType: systemType,
         orderNum: formInline.orderNum,
         orderNumTypeEnum: formInline.region,
       }).then((v) => {

@@ -17,7 +17,7 @@ const state: SETTINGSTATETYPE = {
   deepActive: "", //最后点击的菜单层级
   permissionList: [], //权限数组 ，目前只用于重定向,403
   localRouterName: [], //本地路由表所有name // 手动404 解决刷新404问题
-  systemType: 0,//0 智慧景区 1智慧收银
+  systemType: 0, //0 智慧景区 1智慧收银
 };
 
 const mutations = {
@@ -42,7 +42,7 @@ const mutations = {
     let localRouterName: string[] = [];
     getRouterName(asyncRoutes, localRouterName, null);
     state.localRouterName = localRouterName;
-    router.replace('/');
+    router.replace("/");
   },
   [MUTATIONTYPES.LOGOUT](state: SETTINGSTATETYPE) {
     state.token = null;
@@ -85,6 +85,7 @@ const getters = {
   deepActive: (state: SETTINGSTATETYPE) => state.deepActive,
   permissionList: (state: SETTINGSTATETYPE) => state.permissionList,
   localRouterName: (state: SETTINGSTATETYPE) => state.localRouterName,
+  systemType: (state: SETTINGSTATETYPE) => state.systemType,
 };
 
 export default { state, getters, mutations, actions, namespaced: true };
