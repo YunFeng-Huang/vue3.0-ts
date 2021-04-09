@@ -72,9 +72,18 @@ export default defineComponent({
       store.commit("permission/" + STOREMUTATIONTYPES.PERMISSION.SETVALUE, {
         systemType: formInline.systemType,
       });
-      store.commit("permission/" + STOREMUTATIONTYPES.PERMISSION.SETROUTERS, menuList);
-      store.dispatch("permission/" + STOREMUTATIONTYPES.PERMISSION.SETROUTERS);
-      // proxy.$refs.reset.password = true;
+      let form = reactive({
+        loginName: "sxwl01",
+        password: "1qaz2wsx3edc",
+        merchantCode: "sxwl",
+        checkCode: "aszz",
+      });
+      let arr = menuList;
+      if (formInline.systemType == 0) {
+        var data = await proxy.$api.Login.login(form);
+        arr = data.permission;
+      }
+      await store.dispatch("permission/" + STOREMUTATIONTYPES.PERMISSION.LOGIN, arr);
     };
     onMounted(() => {
       proxy.$api.Login.merchants({}).then(({ data }) => {

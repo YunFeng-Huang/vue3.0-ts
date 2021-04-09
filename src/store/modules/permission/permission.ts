@@ -3,12 +3,9 @@ import router, { asyncRoutes, constantRoutes, RouteRecordRaw } from "@/router";
 import { getRouterName } from "@/utils/routers";
 import { SETTINGSTATETYPE, MUTATIONTYPES, PARAMS } from "./permission_d";
 import axios from "@/api";
-// import menuList from "@/router/menu";
-// const empty = () => import("@/views/layout/component/main-content/content.vue");
 // @ts-ignore: Unreachable code error
 import { ElMessage } from "ElementPlus";
 import { setSessionStorage } from "@/utils/storage";
-import { AxiosResponse } from "axios";
 
 const state: SETTINGSTATETYPE = {
   menuList: [], //菜单权限 展示菜单 数据后端返回
@@ -66,9 +63,8 @@ const actions = {
     });
     commit(MUTATIONTYPES.SETROUTERS, state.menuList);
   },
-  async [MUTATIONTYPES.LOGIN]({ commit, dispatch }: any, params) {
-    var data = await axios.Login.login(params);
-    commit(MUTATIONTYPES.SETROUTERS, data.permission);
+  async [MUTATIONTYPES.LOGIN]({ commit, dispatch }: any, permission) {
+    commit(MUTATIONTYPES.SETROUTERS, permission);
     await dispatch(MUTATIONTYPES.SETROUTERS);
     commit(MUTATIONTYPES.LOGIN, "login");
   },

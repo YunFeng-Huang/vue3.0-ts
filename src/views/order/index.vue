@@ -4,7 +4,7 @@
       <el-input v-model="formInline.orderNum" placeholder="订单号"></el-input>
     </el-form-item>
     <el-form-item label="订单号类型">
-      <el-select v-model="formInline.region" placeholder="订单号类型">
+      <el-select v-model="formInline.orderNumTypeEnum" placeholder="订单号类型">
         <el-option label="支付宝订单号" value="1"></el-option>
         <el-option label="微信订单号" value="2"></el-option>
         <el-option label="业务订单号" value="3"></el-option>
@@ -61,7 +61,7 @@ export default defineComponent({
     });
     const formInline = reactive({
       orderNum: "",
-      region: "",
+      orderNumTypeEnum: "1",
     });
     const open = () => {
       // @ts-ignore: Unreachable code error
@@ -75,7 +75,7 @@ export default defineComponent({
       proxy.$api.Order.order({
         systemType: systemType,
         orderNum: formInline.orderNum,
-        orderNumTypeEnum: formInline.region,
+        orderNumTypeEnum: formInline.orderNumTypeEnum,
       }).then((v) => {
         let aliOrderQueryResult = v.aliOrderQueryResult;
         orderData.oldaliOrderQueryResult = JSON.stringify(aliOrderQueryResult);

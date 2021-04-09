@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="提示" v-model="dialogVisible" width="50%">
+  <el-dialog title="返回值" v-model="dialogVisible" width="50%">
     <span>{{ message }}</span>
   </el-dialog>
 </template>

@@ -62,9 +62,11 @@ export default defineComponent({
 
     const handleSubmit = async () => {
       loading.value = true;
-      try {
-        await store.dispatch("permission/" + STOREMUTATIONTYPES.PERMISSION.LOGIN, form);
-      } catch (error) {}
+      var data = await proxy.$api.Login.login(form);
+      await store.dispatch(
+        "permission/" + STOREMUTATIONTYPES.PERMISSION.LOGIN,
+        data.permission
+      );
       loading.value = false;
     };
     const changeImg = () => {
