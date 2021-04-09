@@ -95,12 +95,13 @@ export default defineComponent({
     align-items: center;
   }
   &-form {
-    width: calc(100% - 80px);
-    // height: 380px;
-    padding: 2vh;
-    // margin-top: calc((100vh - 380px) / 2);
-    margin-right: 20px;
-    margin-left: 20px;
+    // width: calc(100% - 80px);
+    // // height: 380px;
+    // padding: 2vh;
+    // // margin-top: calc((100vh - 380px) / 2);
+    // margin-right: 20px;
+    // margin-left: 20px;
+    padding: 4vh;
     background: url("~@/assets/login_images/login_form.png");
     background-size: 100% 100%;
     border-radius: 10px;

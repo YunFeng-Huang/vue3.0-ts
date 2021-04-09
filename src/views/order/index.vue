@@ -15,7 +15,11 @@
     </el-form-item>
   </el-form>
   <div class="top-search-main">
-    <p>对应支付系统返回值：该结果是进行转化后的展示，如要查看原始返回，请点击此处。</p>
+    <p>
+      对应支付系统返回值：该结果是进行转化后的展示，如要查看原始返回，请<a @click="open"
+        >点击此处</a
+      >。
+    </p>
     <template v-if="aliOrderQueryResult.length > 0">
       <el-table
         :data="aliOrderQueryResult"
@@ -30,6 +34,7 @@
         <el-table-column prop="value" label="返回值"></el-table-column>
       </el-table>
     </template>
+    <v-dialog ref="dialog" :message="oldaliOrderQueryResult"></v-dialog>
   </div>
 </template>
 
@@ -37,21 +42,27 @@
 import { defineComponent, ref, reactive, getCurrentInstance, toRefs } from "vue";
 import store from "@/store";
 import router from "@/router";
-
+import VDialog, { dialog } from "./dialog/index.vue";
 export interface tableEle {
   id: string;
   key: string;
   value: any;
   children?: tableEle[];
 }
+
 export default defineComponent({
   name: "",
-  components: {},
+  components: { VDialog },
   setup() {
     const { proxy }: any = getCurrentInstance();
     let orderData = reactive({
-      aliOrderQueryResult: [],
+      oldaliOrderQueryResult: "", //string接口返回
+      aliOrderQueryResult: [], //数据处理
     });
+    const open = () => {
+      // @ts-ignore: Unreachable code error
+      (proxy.$refs.dialog as dialog).dialogVisible = true;
+    };
     const postOrder = () => {
       // systemType：0 智慧景区 1智慧收银
       // orderNum：订单号
@@ -62,6 +73,7 @@ export default defineComponent({
         orderNumTypeEnum: 3,
       }).then((v) => {
         let aliOrderQueryResult = v.aliOrderQueryResult;
+        orderData.oldaliOrderQueryResult = JSON.stringify(aliOrderQueryResult);
         let aliOrderQueryResultList = [];
         let o: tableEle;
         for (const key in aliOrderQueryResult) {
@@ -70,7 +82,7 @@ export default defineComponent({
             o = {
               id: key,
               key: key,
-              value: element,
+              value: Array.isArray(element) ? "" : element,
               children: [],
             };
             if (Array.isArray(element)) {
@@ -92,7 +104,6 @@ export default defineComponent({
           }
           aliOrderQueryResultList.push(o);
         }
-        console.log(aliOrderQueryResultList, "aliOrderQueryResultList");
         orderData.aliOrderQueryResult = aliOrderQueryResultList;
       });
     };
@@ -104,8 +115,14 @@ export default defineComponent({
       postOrder();
     };
     postOrder();
-    return { formInline, onSubmit, ...toRefs(orderData) };
+    return { formInline, onSubmit, open, ...toRefs(orderData) };
   },
 });
 </script>
+<style lang="scss">
+.top-search-oldaliOrderQueryResult .el-message-box__message p {
+  word-break: break-all;
+}
+</style>
+
 <style lang="scss" scoped></style>

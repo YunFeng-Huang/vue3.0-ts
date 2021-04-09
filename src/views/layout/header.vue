@@ -14,10 +14,12 @@
       </el-form-item>
       <el-form-item label="商户选择">
         <el-select v-model="formInline.region" placeholder="商户选择" size="small">
-          <el-option label="商户1" value="0"></el-option>
-          <el-option label="商户2" value="1"></el-option>
-          <el-option label="商户3" value="2"></el-option>
-          <el-option label="商户4" value="3"></el-option>
+          <el-option
+            v-for="item in merchants"
+            :label="item.merchant"
+            :value="item.id"
+            :key="item.id"
+          ></el-option>
         </el-select>
       </el-form-item>
     </el-form>
@@ -41,7 +43,16 @@
 <script lang="ts">
 import VReset from "./dialog/reset.vue";
 import store, { STOREMUTATIONTYPES } from "@/store";
-import { computed, defineComponent, getCurrentInstance, reactive } from "vue";
+import {
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  onMounted,
+  onUpdated,
+  reactive,
+  ref,
+  nextTick,
+} from "vue";
 import menuList from "@/router/menu";
 export default defineComponent({
   setup(props, ctx) {
@@ -50,6 +61,7 @@ export default defineComponent({
       user: "0",
       region: "0",
     });
+    let merchants = ref([]);
     const loginOut = async (val: string) => {
       await store.dispatch("permission/" + STOREMUTATIONTYPES.PERMISSION.LOGOUT);
     };
@@ -61,10 +73,19 @@ export default defineComponent({
       store.dispatch("permission/" + STOREMUTATIONTYPES.PERMISSION.SETROUTERS);
       // proxy.$refs.reset.password = true;
     };
+    onMounted(() => {
+      proxy.$api.Login.merchants().then(({ data }) => {
+        merchants.value = data;
+        nextTick(() => {
+          formInline.region = data[0].id;
+        });
+      });
+    });
     return {
       loginOut,
       resetPass,
       formInline,
+      merchants,
       change,
     };
   },

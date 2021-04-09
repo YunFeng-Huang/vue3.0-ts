@@ -24,8 +24,16 @@ let logout = (params: any) => {
     data: params,
   });
 };
+let merchants = (params: any) => {
+  return requset({
+    url: requsetUrl(api["merchants"]),
+    method: "post",
+    data: params,
+  });
+};
 export default {
   login,
   logout,
   checkcode,
+  merchants
 };

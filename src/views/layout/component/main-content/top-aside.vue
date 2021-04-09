@@ -54,7 +54,7 @@ export default defineComponent({
   top: 50px;
   right: 0;
   background: #fff;
-  z-index: 1000;
+  // z-index: 1000;
   transition: left 0.25s;
   .toggleNavCollapse {
     display: inline-block;

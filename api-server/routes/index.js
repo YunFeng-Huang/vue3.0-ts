@@ -2,7 +2,8 @@ var express = require('express');
 var app = require('../app');
 var router = express.Router();
 const {
-    login
+    login,
+    merchants
 } = require('../api/data/login.js')
 const {
     order
@@ -16,5 +17,7 @@ router.post('/zhihuijingqu-service/api/zhihuijingqu/user/login', async (req, res
 router.post('/zhihuijingqu-service/api/zhihuijingqu/user/order', async (req, res) => {
     res.send(order)
 })
-
+router.post('/zhihuijingqu-service/api/zhihuijingqu/user/merchants', async (req, res) => {
+    res.send(merchants());
+})
 module.exports = router;
